@@ -1,19 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 
-namespace WelnessWebsite.Controllers;
-
-
-public class LoginPage : Controller
+namespace WelnessWebsite.Controllers
 {
-    public IActionResult Index()
+    public class LoginPage : Controller
     {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-    public IActionResult login()
-    {
-        return View();
+        [Route("LoginPage/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [Route("LoginPage/SignUp")]
+        public IActionResult SignUpPage()
+        {
+            return View();
+        }
     }
- 
 }
