@@ -1,15 +1,21 @@
-﻿namespace WelnessWebsite.Models
+﻿using Newtonsoft.Json;
+
+namespace WelnessWebsite.Models
 {
     public class Workout
     {
         public Workout()
         {
-            
+
         }
-        public string ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string MuscleGroup { get; set; }
-        public string FocusedMuscle { get; set; }
+        public int ID { get; set; }
+        public int UserID { get; set; }
+
+        public string type { get; set; }
+        public string muscle { get; set; }
+        public string dificulty { get; set; }
+        public string instructions { get; set; }
+
+      
     }
 }

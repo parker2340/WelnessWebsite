@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using WelnessWebsite.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<WelnessWebsiteContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WelnessWebsiteContext") ?? throw new InvalidOperationException("Connection string 'WelnessWebsiteContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
