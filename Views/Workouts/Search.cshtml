@@ -1,64 +1,34 @@
 ﻿@model List<Workout>
 
-@{
-    ViewData["Title"] = "Create";
-}
+<h2>Search Results</h2>
 
-<h2>Search Workouts</h2>
-
-@using (Html.BeginForm("Search", "User", FormMethod.Get))
+@if (Model.Count > 0)
 {
-    <div>
-        <label for="muscle">Muscle:</label>
-        <input type="text" name="muscle" id="muscle" />
-    </div>
-    <div>
-        <label for="type">Type:</label>
-        <input type="text" name="type" id="type" />
-    </div>
-    <div>
-        <label for="difficulty">Difficulty:</label>
-        <input type="text" name="difficulty" id="difficulty" />
-    </div>
-    <div>
-        <input type="submit" value="Search" />
-    </div>
-}
-
-@if (Model != null)
-{
-    <h3>Search Results</h3>
-
-    @if (Model.Count > 0)
-    {
-        <table>
-            <thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Muscle</th>
+                <th>Difficulty</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var workout in Model)
+            {
                 <tr>
-                    <th>ID</th>
-                    <th>User ID</th>
-                    <th>Type</th>
-                    <th>Muscle</th>
-                    <th>Difficulty</th>
-                    <th>Instructions</th>
+                    <td>@workout.type</td>
+                    <td>@workout.muscle</td>
+                    <td>@workout.dificulty</td>
+                    <td>@workout.instructions</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var workout in Model)
-                {
-                    <tr>
-                        <td>@workout.ID</td>
-                        <td>@workout.UserID</td>
-                        <td>@workout.type</td>
-                        <td>@workout.muscle</td>
-                        <td>@workout.dificulty</td>
-                        <td>@workout.instructions</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>No results found.</p>
-    }
+            }
+        </tbody>
+    </table>
 }
+else
+{
+    <p>No results found.</p>
+}
+
+<a asp-action="Index" class="btn btn-primary">Back to List</a>

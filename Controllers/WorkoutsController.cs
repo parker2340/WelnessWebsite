@@ -159,8 +159,9 @@ namespace WelnessWebsite.Models
         {
           return (_context.Workout?.Any(e => e.ID == id)).GetValueOrDefault();
         }
-        // GET: User/Search
-        public ActionResult Search(string muscle, string type, string difficulty)
+
+        // GET: Workouts/Search
+        public ActionResult Search()
         {
             List<Workout> workouts = new List<Workout>(); // Initialize with an empty list
 
@@ -172,7 +173,7 @@ namespace WelnessWebsite.Models
                 httpClient = new HttpClient();
 
                 // Set the base URL of the API
-                httpClient.BaseAddress = new Uri("https://api.api-ninjas.com/v1/");
+                httpClient.BaseAddress = new Uri("https://api.api-ninjas.com/v1/exercises");
 
                 // Set the API key in the request headers
                 httpClient.DefaultRequestHeaders.Add("Authorization", "SsgKeVWXoIqUGk49rXOFiHvhnF55d2yWEXKd8KxB");
@@ -216,17 +217,7 @@ namespace WelnessWebsite.Models
                 httpClient?.Dispose();
             }
 
-            // Filter the workouts based on the search criteria
-            if (!string.IsNullOrEmpty(muscle))
-                workouts = workouts.Where(w => w.muscle == muscle).ToList();
-
-            if (!string.IsNullOrEmpty(type))
-                workouts = workouts.Where(w => w.type == type).ToList();
-
-            if (!string.IsNullOrEmpty(difficulty))
-                workouts = workouts.Where(w => w.dificulty == difficulty).ToList();
-
-            // Pass the filtered list of workouts to the view
+            // Pass the list of workouts to the view
             return View(workouts);
         }
     }
