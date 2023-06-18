@@ -8,7 +8,9 @@ namespace WelnessWebsite.Models
         {
 
         }
+        [JsonIgnore]
         public int ID { get; set; }
+        [JsonIgnore]
         public int UserID { get; set; }
 
         public string type { get; set; }

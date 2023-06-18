@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WelnessWebsite.Data;
+using WelnessWebsite.Models;
 
-namespace WelnessWebsite.Models
+namespace WelnessWebsite.Controllers
 {
     public class WorkoutsController : Controller
     {
@@ -22,9 +23,15 @@ namespace WelnessWebsite.Models
         // GET: Workouts
         public async Task<IActionResult> Index()
         {
-              return _context.Workout != null ? 
-                          View(await _context.Workout.ToListAsync()) :
-                          Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
+            if (_context.Workout != null)
+            {
+                var workouts = await _context.Workout.ToListAsync();
+                return View(workouts);
+            }
+            else
+            {
+                return Problem("Entity set 'WelnessWebsiteContext.Workout' is null.");
+            }
         }
 
         // GET: Workouts/Details/5
@@ -35,8 +42,7 @@ namespace WelnessWebsite.Models
                 return NotFound();
             }
 
-            var workout = await _context.Workout
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var workout = await _context.Workout.FirstOrDefaultAsync(m => m.ID == id);
             if (workout == null)
             {
                 return NotFound();
@@ -52,11 +58,9 @@ namespace WelnessWebsite.Models
         }
 
         // POST: Workouts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,UserID,type,muscle,dificulty,instructions")] Workout workout)
+        public async Task<IActionResult> Create([Bind("ID,UserID,Type,Muscle,Difficulty,Instructions")] Workout workout)
         {
             if (ModelState.IsValid)
             {
@@ -84,11 +88,9 @@ namespace WelnessWebsite.Models
         }
 
         // POST: Workouts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,UserID,type,muscle,dificulty,instructions")] Workout workout)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,UserID,Type,Muscle,Difficulty,Instructions")] Workout workout)
         {
             if (id != workout.ID)
             {
@@ -126,8 +128,7 @@ namespace WelnessWebsite.Models
                 return NotFound();
             }
 
-            var workout = await _context.Workout
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var workout = await _context.Workout.FirstOrDefaultAsync(m => m.ID == id);
             if (workout == null)
             {
                 return NotFound();
@@ -143,82 +144,64 @@ namespace WelnessWebsite.Models
         {
             if (_context.Workout == null)
             {
-                return Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
+                return Problem("Entity set 'WelnessWebsiteContext.Workout' is null.");
             }
+
             var workout = await _context.Workout.FindAsync(id);
             if (workout != null)
             {
                 _context.Workout.Remove(workout);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool WorkoutExists(int id)
         {
-          return (_context.Workout?.Any(e => e.ID == id)).GetValueOrDefault();
+            return _context.Workout.Any(e => e.ID == id);
         }
 
         // GET: Workouts/Search
-        public ActionResult Search()
+        public IActionResult Search()
         {
-            List<Workout> workouts = new List<Workout>(); // Initialize with an empty list
+            return View();
+        }
 
-            // Create an instance of HttpClient
-            HttpClient httpClient = null;
-
-            try
+        // POST: Workouts/Search
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Search(string muscle)
+        {
+            if (string.IsNullOrEmpty(muscle))
             {
-                httpClient = new HttpClient();
+                ModelState.AddModelError("Muscle", "The Muscle field is required.");
+                return View();
+            }
 
-                // Set the base URL of the API
-                httpClient.BaseAddress = new Uri("https://api.api-ninjas.com/v1/exercises");
+            string api_url = $"https://api.api-ninjas.com/v1/exercises?muscle={muscle}";
+            string apiKey = "SsgKeVWXoIqUGk49rXOFiHvhnF55d2yWEXKd8KxB";
 
-                // Set the API key in the request headers
-                httpClient.DefaultRequestHeaders.Add("Authorization", "SsgKeVWXoIqUGk49rXOFiHvhnF55d2yWEXKd8KxB");
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("X-Api-Key", apiKey);
 
-                // Make the API call and retrieve the response
-                HttpResponseMessage response = httpClient.GetAsync("workouts").GetAwaiter().GetResult();
-
-                // Check if the response is null
-                if (response != null)
+                try
                 {
-                    // If the API call is successful (status code 200), parse the response
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // Read the response content as a string
-                        string responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    HttpResponseMessage response = await client.GetAsync(api_url);
+                    response.EnsureSuccessStatusCode();
 
-                        // Deserialize the response content into a list of Workout
-                        workouts = JsonConvert.DeserializeObject<List<Workout>>(responseContent);
-                    }
-                    else
-                    {
-                        // Handle the API call failure, return an appropriate view or error message
-                        return View("Error");
-                    }
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    List<Workout> workouts = JsonConvert.DeserializeObject<List<Workout>>(responseContent);
+
+                    return View("Search", workouts);
                 }
-                else
+                catch (Exception ex)
                 {
-                    // Handle the case when the response is null
-                    return View("Error");
+                    ModelState.AddModelError("", "An error occurred while searching for workouts. Please try again later.");
+                    return View();
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exception that occurs during the API call
-                // Log the exception or return an appropriate view or error message
-                return View("Error");
-            }
-            finally
-            {
-                // Dispose of the httpClient object
-                httpClient?.Dispose();
-            }
-
-            // Pass the list of workouts to the view
-            return View(workouts);
         }
     }
 }
