@@ -13,6 +13,7 @@ namespace WelnessWebsite.Models
         [JsonIgnore]
         public int UserID { get; set; }
 
+        public string Name { get; set; }
         public string type { get; set; }
         public string muscle { get; set; }
         public string dificulty { get; set; }

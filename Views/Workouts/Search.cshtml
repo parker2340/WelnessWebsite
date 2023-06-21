@@ -22,6 +22,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Name</th>
                 <th>Type</th>
                 <th>Muscle</th>
                 <th>Difficulty</th>
@@ -32,6 +33,7 @@
             @foreach (var workout in Model)
             {
                 <tr>
+                    <td>@workout.Name</td>
                     <td>@workout.type</td>
                     <td>@workout.muscle</td>
                     <td>@workout.dificulty</td>
