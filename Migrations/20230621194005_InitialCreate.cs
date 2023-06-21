@@ -10,6 +10,21 @@ namespace WelnessWebsite.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DailyWorkout",
                 columns: table => new
                 {
@@ -21,6 +36,12 @@ namespace WelnessWebsite.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DailyWorkout", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DailyWorkout_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,6 +60,12 @@ namespace WelnessWebsite.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WeeklyNutrition", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_WeeklyNutrition_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,10 +75,11 @@ namespace WelnessWebsite.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    muscle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    dificulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    instructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Muscle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DailyWorkoutID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -89,47 +117,22 @@ namespace WelnessWebsite.Migrations
                         principalColumn: "ID");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailConfirmed = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WeeklyNutritionID = table.Column<int>(type: "int", nullable: true),
-                    WorkoutID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_User_DailyWorkout_WorkoutID",
-                        column: x => x.WorkoutID,
-                        principalTable: "DailyWorkout",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_User_WeeklyNutrition_WeeklyNutritionID",
-                        column: x => x.WeeklyNutritionID,
-                        principalTable: "WeeklyNutrition",
-                        principalColumn: "ID");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_DailyNutrition_WeeklyNutritionID",
                 table: "DailyNutrition",
                 column: "WeeklyNutritionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_WeeklyNutritionID",
-                table: "User",
-                column: "WeeklyNutritionID");
+                name: "IX_DailyWorkout_UserID",
+                table: "DailyWorkout",
+                column: "UserID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_WorkoutID",
-                table: "User",
-                column: "WorkoutID");
+                name: "IX_WeeklyNutrition_UserId",
+                table: "WeeklyNutrition",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workout_DailyWorkoutID",
@@ -143,9 +146,6 @@ namespace WelnessWebsite.Migrations
                 name: "DailyNutrition");
 
             migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
                 name: "Workout");
 
             migrationBuilder.DropTable(
@@ -153,6 +153,9 @@ namespace WelnessWebsite.Migrations
 
             migrationBuilder.DropTable(
                 name: "DailyWorkout");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

@@ -27,35 +27,8 @@ namespace WelnessWebsite.Controllers
                           Problem("Entity set 'WelnessWebsiteContext.User'  is null.");
         }
 
-        // GET: Users/SignUp
-        public IActionResult signUpPage()
-        {
-            return View();
-        }
-
-        public IActionResult Index(string username, string password)
-        {
-            if (ValidateCredentials(username, password))
-            {
-                // Credentials are valid, proceed to show the user list
-                return View(_context.User.ToList());
-            }
-            else
-            {
-                // Credentials are invalid, show an error message or redirect to an error page
-                return Content("Invalid username or password");
-            }
-        }
-
-
-        private bool ValidateCredentials(string username, string password)
-        {
-            var user = _context.User.FirstOrDefault(u => u.Name == username && u.Password == password);
-            return user != null;
-        }
-
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.User == null)
             {
@@ -71,6 +44,32 @@ namespace WelnessWebsite.Controllers
 
             return View(user);
         }
+        /*        // GET: Users/SignUp
+public IActionResult signUpPage()
+{
+    return View();
+}
+
+*//*        public IActionResult Index(string username, string password)
+        {
+            if (ValidateCredentials(username, password))
+            {
+                // Credentials are valid, proceed to show the user list
+                return View(_context.User.ToList());
+            }
+            else
+            {
+                // Credentials are invalid, show an error message or redirect to an error page
+                return Content("Invalid username or password");
+            }
+        }*//*
+
+
+        private bool ValidateCredentials(string username, string password)
+        {
+            var user = _context.User.FirstOrDefault(u => u.Name == username && u.Password == password);
+            return user != null;
+        }*/
 
         // GET: Users/Create
         public IActionResult Create()
@@ -83,7 +82,7 @@ namespace WelnessWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Password,EmailConfirmed")] User user)
+        public async Task<IActionResult> Create([Bind("Name,Email,Password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +94,7 @@ namespace WelnessWebsite.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.User == null)
             {
@@ -115,7 +114,7 @@ namespace WelnessWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,Name,Email,Password,EmailConfirmed")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Password")] User user)
         {
             if (id != user.ID)
             {
@@ -146,7 +145,7 @@ namespace WelnessWebsite.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.User == null)
             {
@@ -166,7 +165,7 @@ namespace WelnessWebsite.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.User == null)
             {
@@ -182,7 +181,7 @@ namespace WelnessWebsite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
           return (_context.User?.Any(e => e.ID == id)).GetValueOrDefault();
         }

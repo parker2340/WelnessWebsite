@@ -17,7 +17,7 @@ namespace WelnessWebsite.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.16")
+                .HasAnnotation("ProductVersion", "6.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -77,19 +77,22 @@ namespace WelnessWebsite.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("UserID")
+                        .IsUnique();
+
                     b.ToTable("DailyWorkout");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.User", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailConfirmed")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -100,17 +103,7 @@ namespace WelnessWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WeeklyNutritionID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WorkoutID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("WeeklyNutritionID");
-
-                    b.HasIndex("WorkoutID");
 
                     b.ToTable("User");
                 });
@@ -143,6 +136,9 @@ namespace WelnessWebsite.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("WeeklyNutrition");
                 });
 
@@ -157,24 +153,28 @@ namespace WelnessWebsite.Migrations
                     b.Property<int?>("DailyWorkoutID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instructions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Muscle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
-
-                    b.Property<string>("dificulty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("instructions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("muscle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -190,19 +190,22 @@ namespace WelnessWebsite.Migrations
                         .HasForeignKey("WeeklyNutritionID");
                 });
 
-            modelBuilder.Entity("WelnessWebsite.Models.User", b =>
+            modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
                 {
-                    b.HasOne("WelnessWebsite.Models.WeeklyNutrition", "WeeklyNutrition")
-                        .WithMany()
-                        .HasForeignKey("WeeklyNutritionID");
+                    b.HasOne("WelnessWebsite.Models.User", null)
+                        .WithOne("Workout")
+                        .HasForeignKey("WelnessWebsite.Models.DailyWorkout", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.HasOne("WelnessWebsite.Models.DailyWorkout", "Workout")
-                        .WithMany()
-                        .HasForeignKey("WorkoutID");
-
-                    b.Navigation("WeeklyNutrition");
-
-                    b.Navigation("Workout");
+            modelBuilder.Entity("WelnessWebsite.Models.WeeklyNutrition", b =>
+                {
+                    b.HasOne("WelnessWebsite.Models.User", null)
+                        .WithOne("WeeklyNutrition")
+                        .HasForeignKey("WelnessWebsite.Models.WeeklyNutrition", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.Workout", b =>
@@ -215,6 +218,13 @@ namespace WelnessWebsite.Migrations
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
                 {
                     b.Navigation("WorkoutList");
+                });
+
+            modelBuilder.Entity("WelnessWebsite.Models.User", b =>
+                {
+                    b.Navigation("WeeklyNutrition");
+
+                    b.Navigation("Workout");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.WeeklyNutrition", b =>

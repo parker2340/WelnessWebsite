@@ -2,6 +2,87 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    this is the index file
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Website</title>
+    <link rel="stylesheet" href="/css/navBar.css">
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Journey to Fitness Starts Here</h1>
+            <p>Get fit, stay healthy, and achieve your goals with our personalized workout programs and expert trainers.</p>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="section-content">
+            <h2>About Us</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt felis eget risus consectetur, nec consectetur purus semper. Sed vitae mi in ligula posuere placerat. Sed vulputate nisl vel est pellentesque pharetra.</p>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="section-content">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Personalized Workout Programs</li>
+                <li>Group Fitness Classes</li>
+                <li>Expert Trainers</li>
+                <li>Nutrition Guidance</li>
+                <li>Wellness Workshops</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="section-content">
+            <h2>Contact Us</h2>
+            <p>Ready to get started? Contact us today!</p>
+            <a href="mailto:info@example.com" class="contact-button">Email Us</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Workout Website. All rights reserved.</p>
+    </footer>
+    </body>
+
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    
+
+    .hero {
+        background-image: url('background-image.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hero-content {
+        color: #fff;
+    }
+
+        .hero-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+    </style>
+    
