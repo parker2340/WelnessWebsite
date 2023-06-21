@@ -14,10 +14,10 @@ namespace WelnessWebsite.Models
         public int UserID { get; set; }
 
         public string Name { get; set; }
-        public string type { get; set; }
-        public string muscle { get; set; }
-        public string dificulty { get; set; }
-        public string instructions { get; set; }
+        public string Type { get; set; }
+        public string Muscle { get; set; }
+        public string Difficulty { get; set; }
+        public string Instructions { get; set; }
 
       
     }
