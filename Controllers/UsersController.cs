@@ -27,6 +27,33 @@ namespace WelnessWebsite.Controllers
                           Problem("Entity set 'WelnessWebsiteContext.User'  is null.");
         }
 
+        // GET: Users/SignUp
+        public IActionResult signUpPage()
+        {
+            return View();
+        }
+
+        public IActionResult Index(string username, string password)
+        {
+            if (ValidateCredentials(username, password))
+            {
+                // Credentials are valid, proceed to show the user list
+                return View(_context.User.ToList());
+            }
+            else
+            {
+                // Credentials are invalid, show an error message or redirect to an error page
+                return Content("Invalid username or password");
+            }
+        }
+
+
+        private bool ValidateCredentials(string username, string password)
+        {
+            var user = _context.User.FirstOrDefault(u => u.Name == username && u.Password == password);
+            return user != null;
+        }
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
         {
