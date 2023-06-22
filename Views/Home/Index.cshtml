@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Website</title>
+    <title>Gym Bros</title>
     <link rel="stylesheet" href="/css/navBar.css">
 </head>
 <body>
@@ -13,14 +13,23 @@
         <div class="hero-content">
             <h1>Your Journey to Fitness Starts Here</h1>
             <p>Get fit, stay healthy, and achieve your goals with our personalized workout programs and expert trainers.</p>
-            <a href="#contact" class="cta-button">Get Started</a>
+            <button class="login-button">Login</button>
+            <button class="login-button">Register</button> <br /><br />
+            <a href="#contact" class="cta-button">More about the program</a>
         </div>
     </section>
-
+    @if (User.Identity.IsAuthenticated)
+    {
+        
+    }
+    else
+    {
+        
+    
     <section id="about" class="section">
         <div class="section-content">
             <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt felis eget risus consectetur, nec consectetur purus semper. Sed vitae mi in ligula posuere placerat. Sed vulputate nisl vel est pellentesque pharetra.</p>
+            <p>The Gym Bros app is designed to assist you in achieving your workout and fitness goals. It allows you to set workout routines, track your calorie and protein intake, and make adjustments to ensure a well-rounded fitness experience</p>
         </div>
     </section>
 
@@ -29,10 +38,10 @@
             <h2>Our Services</h2>
             <ul>
                 <li>Personalized Workout Programs</li>
-                <li>Group Fitness Classes</li>
-                <li>Expert Trainers</li>
-                <li>Nutrition Guidance</li>
-                <li>Wellness Workshops</li>
+                <li>Nutrition traking</li>
+                <li>Goal Setting</li>
+                <li>Exercise Library</li>
+                <li>Workout Reminders and Scheduling</li>
             </ul>
         </div>
     </section>
@@ -44,24 +53,45 @@
             <a href="mailto:info@example.com" class="contact-button">Email Us</a>
         </div>
     </section>
-
-    <footer>
-        <p>&copy; 2023 Workout Website. All rights reserved.</p>
+    <br/>
+    }
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - WelnessWebsite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
     </footer>
     </body>
 
 
     <style>
+
+
+    .login-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        .login-button:hover {
+            background-color: #45a049;
+        }
+
+
     body {
+        background-color: #342E37;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        color:white;
     }
 
     
 
     .hero {
-        background-image: url('background-image.jpg');
+        background-color: url('background-image.jpg');
         background-size: cover;
         background-position: center;
         height: 400px;
@@ -72,7 +102,7 @@
     }
 
     .hero-content {
-        color: #fff;
+        color: white;
     }
 
         .hero-content h1 {
