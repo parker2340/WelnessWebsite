@@ -1,47 +1,30 @@
-﻿@model IEnumerable<WelnessWebsite.Models.User>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Login";
 }
 
-<h1>Index</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/loginPage.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form asp-controller="Users" asp-action="Index" method="post">
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="text" id="Email" name="Email" required>
+            </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" required>
+            </div>
+
+            <p>Don't have an account? <a href="@Url.Action("Create", "Users")">Sign Up!</a></p>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

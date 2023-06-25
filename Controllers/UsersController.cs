@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WelnessWebsite.Data;
 using WelnessWebsite.Models;
+using WelnessWebsite.Functions;
 
 namespace WelnessWebsite.Controllers
 {
@@ -27,9 +28,44 @@ namespace WelnessWebsite.Controllers
                           Problem("Entity set 'WelnessWebsiteContext.User'  is null.");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> index(User newUser)
+        {
+            var functions = new MyFunctions();
+
+
+                // Find the user by username
+                var user = await _context.User.FirstOrDefaultAsync(u => u.Email == newUser.Email);
+
+
+                if (user != null)
+                {
+                    // Hash the user-entered password
+                    string hashedPassword = functions.HashPassword(newUser.Password);
+
+                    // Compare the hashed password with the one stored in the user entity
+                    if (hashedPassword == user.Password)
+                    {
+                        // Passwords match, create a login session and store user ID
+                        HttpContext.Session.SetInt32("UserId", user.ID);
+
+                    // Redirect to the desired page (e.g., Home/Index)
+                    return RedirectToAction("Details", "Users", new { id = user.ID });
+                }
+            }
+
+                // Invalid username or password
+
+
+            return View(newUser);
+
+        }
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+
             if (id == null || _context.User == null)
             {
                 return NotFound();
@@ -82,10 +118,15 @@ public IActionResult signUpPage()
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Email,Password")] User user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
+                var functions = new MyFunctions();
+
+                // Hash the password
+                user.Password = functions.HashPassword(user.Password);
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
