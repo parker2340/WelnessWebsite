@@ -56,10 +56,16 @@ namespace WelnessWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,ID,DateTime")] DailyWorkout dailyWorkout)
+        public async Task<IActionResult> Create([Bind("DateTime")] DailyWorkout dailyWorkout)
         {
             if (ModelState.IsValid)
             {
+                // Retrieve the user ID from the session
+                var userId = HttpContext.Session.GetString("UserID");
+
+                // Assign the user ID to the daily workout
+                dailyWorkout.UserID = int.Parse(userId);
+
                 _context.Add(dailyWorkout);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

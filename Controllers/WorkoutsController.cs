@@ -62,5 +62,10 @@ namespace WelnessWebsite.Controllers
                 }
             }
         }
+        public IActionResult ProcessItem(Workout workout)
+        {
+
+            return RedirectToAction("Index", "DailyWorkouts");
+        }
     }
 }

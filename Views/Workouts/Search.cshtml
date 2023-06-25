@@ -41,6 +41,13 @@
                     <td>@workout.Muscle</td>
                     <td>@workout.Difficulty</td>
                     <td>@workout.Instructions</td>
+                    <td>
+                        <form method="post" action="@Url.Action("SelectWorkout", "DailyWorkouts")">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="WorkoutID" value="@workout.ID" />
+                            <button type="submit" class="btn btn-primary">Select</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
