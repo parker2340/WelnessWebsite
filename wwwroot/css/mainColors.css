@@ -1,0 +1,49 @@
+﻿
+
+
+.login-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+    .login-button:hover {
+        background-color: #45a049;
+    }
+
+body {
+    background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 0;
+    color: white;
+}
+
+.hero {
+    background-image: url('background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    color: white;
+}
+
+    .hero-content h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }

@@ -1,10 +1,10 @@
-
+﻿
 
 .container {
     max-width: 400px;
     margin: 20px auto;
-    padding: 30px;
-    background: linear-gradient(to bottom, #0F0E0E 40%, #6C809A);
+    padding: 20px;
+    background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
     border-radius: 5px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 1.1);
 }
@@ -20,9 +20,9 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
+input[type="text"]
 input[type="password"] {
-    width: 100%;
+    width: 350%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;

@@ -7,15 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gym Bros</title>
     <link rel="stylesheet" href="/css/navBar.css">
+    <link rel="stylesheet" href="/css/mainColors.css" />
 </head>
 <body>
     <section class="hero">
         <div class="hero-content">
             <h1>Your Journey to Fitness Starts Here</h1>
             <p>Get fit, stay healthy, and achieve your goals with our personalized workout programs and expert trainers.</p>
-            <button class="login-button">Login</button>
-            <button class="login-button">Register</button> <br /><br />
-            <a href="#contact" class="cta-button">More about the program</a>
+            <a href="users" class="login-button">Login</a>
+            <a href="users/create" class="login-button">Register</a> <br /><br />
+            <a href="#contact" style="text-decoration:none" class="cta-button">More about the program</a>
         </div>
     </section>
     @if (User.Identity.IsAuthenticated)
@@ -63,56 +64,4 @@
     </body>
 
 
-    <style>
-
-
-    .login-button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-        .login-button:hover {
-            background-color: #45a049;
-        }
-
-
-    body {
-        background-color: #342E37;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        color:white;
-    }
-
-    
-
-    .hero {
-        background-color: url('background-image.jpg');
-        background-size: cover;
-        background-position: center;
-        height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .hero-content {
-        color: white;
-    }
-
-        .hero-content h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .hero-content p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-    </style>
-    
+   
