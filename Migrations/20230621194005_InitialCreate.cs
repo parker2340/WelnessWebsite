@@ -44,6 +44,10 @@ namespace WelnessWebsite.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.DropIndex(
+                name: "IX_DailyWorkout_UserID",
+                table: "DailyWorkout");
+
             migrationBuilder.CreateTable(
                 name: "WeeklyNutrition",
                 columns: table => new

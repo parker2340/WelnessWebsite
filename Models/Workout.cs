@@ -16,7 +16,7 @@ namespace WelnessWebsite.Models
 
         public int ID { get; set; }
         [JsonIgnore]
-        public int UserID { get; set; }
+        public int DailyWorkoutID { get; set; }
 
         public string Name { get; set; }
         public string Type { get; set; }

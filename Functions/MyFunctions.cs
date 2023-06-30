@@ -14,4 +14,5 @@ namespace WelnessWebsite.Functions
             return Convert.ToBase64String(hashed);
             }
         }
+
     }

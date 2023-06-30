@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WelnessWebsite.Data;
 using WelnessWebsite.Models;
 
@@ -22,7 +24,7 @@ namespace WelnessWebsite.Controllers
 
  
         // GET: Workouts/Search
-        public IActionResult Search()
+        public IActionResult Search(int ID)
         {
             return View();
         }
@@ -62,10 +64,28 @@ namespace WelnessWebsite.Controllers
                 }
             }
         }
-        public IActionResult ProcessItem(Workout workout)
+        [HttpPost]
+        public IActionResult CreateWorkout(string workoutName, string workoutType, string workoutMuscle, string workoutDifficulty, string workoutInstructions)
         {
+            // Create a new Workout row in the server
+            var workout = new Workout
+            {
+                DailyWorkoutID = 6,
+                Name = workoutName,
+                Type = workoutType,
+                Muscle = workoutMuscle,
+                Difficulty = workoutDifficulty,
+                Instructions = workoutInstructions
+            };
+
+            _context.Workout.Add(workout);
+            _context.SaveChanges();
 
             return RedirectToAction("Index", "DailyWorkouts");
         }
+
+
+
+
     }
 }

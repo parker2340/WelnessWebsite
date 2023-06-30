@@ -42,6 +42,14 @@ namespace WelnessWebsite.Controllers
             }
         }
 
+        public IActionResult ViewWorkout(int ID)
+        {
+
+            // Pass the ID to the WorkoutsController page
+            HttpContext.Session.SetInt32("DailyWorkoutID", ID);
+            return RedirectToAction("ViewWorkout", "Workouts");
+        }
+
         // GET: DailyWorkouts/Details/5
         public async Task<IActionResult> Details(int? id)
         {

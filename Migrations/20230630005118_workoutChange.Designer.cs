@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WelnessWebsite.Data;
 
@@ -11,9 +12,10 @@ using WelnessWebsite.Data;
 namespace WelnessWebsite.Migrations
 {
     [DbContext(typeof(WelnessWebsiteContext))]
-    partial class WelnessWebsiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230630005118_workoutChange")]
+    partial class workoutChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +152,7 @@ namespace WelnessWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("DailyWorkoutID")
+                    b.Property<int?>("DailyWorkoutID1")
                         .HasColumnType("int");
 
                     b.Property<string>("Difficulty")
@@ -175,7 +177,7 @@ namespace WelnessWebsite.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("DailyWorkoutID");
+                    b.HasIndex("DailyWorkoutID1");
 
                     b.ToTable("Workout");
                 });
@@ -209,7 +211,7 @@ namespace WelnessWebsite.Migrations
                 {
                     b.HasOne("WelnessWebsite.Models.DailyWorkout", null)
                         .WithMany("WorkoutList")
-                        .HasForeignKey("DailyWorkoutID");
+                        .HasForeignKey("DailyWorkoutID1");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>

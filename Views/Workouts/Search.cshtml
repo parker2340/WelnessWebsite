@@ -33,22 +33,27 @@
             </tr>
         </thead>
         <tbody>
+            @using (Html.BeginForm("CreateWorkout", "Workouts", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
             @foreach (var workout in Model)
             {
-                <tr>
-                    <td>@workout.Name</td>
-                    <td>@workout.Type</td>
-                    <td>@workout.Muscle</td>
-                    <td>@workout.Difficulty</td>
-                    <td>@workout.Instructions</td>
-                    <td>
-                        <form method="post" action="@Url.Action("SelectWorkout", "DailyWorkouts")">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="WorkoutID" value="@workout.ID" />
-                            <button type="submit" class="btn btn-primary">Select</button>
-                        </form>
-                    </td>
-                </tr>
+                <div class="workout-item">
+                    <h4>@workout.Name</h4>
+                    <p>Type: @workout.Type</p>
+                    <p>Muscle: @workout.Muscle</p>
+                    <p>Difficulty: @workout.Difficulty</p>
+                    <p>Instructions: @workout.Instructions</p>
+                    <input type="hidden" name="WorkoutName" value="@workout.Name" />
+                    <input type="hidden" name="WorkoutType" value="@workout.Type" />
+                    <input type="hidden" name="WorkoutMuscle" value="@workout.Muscle" />
+                    <input type="hidden" name="WorkoutDifficulty" value="@workout.Difficulty" />
+                    <input type="hidden" name="WorkoutInstructions" value="@workout.Instructions" />
+                    <button type="submit" class="btn btn-primary">Create Workout</button>
+                    <hr />
+                </div>
+            }
             }
         </tbody>
     </table>
