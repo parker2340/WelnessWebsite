@@ -1,6 +1,14 @@
 ﻿
 
 
+html, body {
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+
+
 .login-button {
     background-color: #4CAF50;
     color: white;
@@ -22,6 +30,8 @@ body {
     padding: 0;
     color: white;
 }
+
+
 
 .hero {
     background-image: url('background-image.jpg');
@@ -46,4 +56,25 @@ body {
     .hero-content p {
         font-size: 18px;
         margin-bottom: 30px;
+    }
+
+
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+    color: black;
+}
+
+.card {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    .card h2 {
+        margin-top: 0;
     }
