@@ -26,6 +26,7 @@ namespace WelnessWebsite.Controllers
         // GET: Workouts/Search
         public IActionResult Search(int ID)
         {
+            HttpContext.Session.SetInt32("DailyWorkoutID", ID);
             return View();
         }
 
@@ -70,7 +71,7 @@ namespace WelnessWebsite.Controllers
             // Create a new Workout row in the server
             var workout = new Workout
             {
-                DailyWorkoutID = 6,
+                DailyWorkoutID = HttpContext.Session.GetInt32("DailyWorkoutID").Value,
                 Name = workoutName,
                 Type = workoutType,
                 Muscle = workoutMuscle,
