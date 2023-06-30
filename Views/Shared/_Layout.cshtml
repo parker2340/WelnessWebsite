@@ -15,9 +15,7 @@
             <a class="navbar-brand" href="#">Workout Website</a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/DailyWorkouts">Workout</a></li>
-                <li><a href="#">Food Tracker</a></li>
-                <li><a href="#">Forum board</a></li>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a href="#">Log out</a></li>
@@ -28,6 +26,7 @@
                     {
                         <li><a href="#">Account</a></li>
                         <li><a href="#">Log out</a></li>
+                        <li><a href="/DailyWorkouts">Workout</a></li>
                     }
                     else
                     {
