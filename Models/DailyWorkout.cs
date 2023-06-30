@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,8 +8,7 @@ namespace WelnessWebsite.Models
     public class DailyWorkout
     {
         public DailyWorkout()
-        {
-            
+        {     
         }
         public int UserID { get; set; }
         [Key]

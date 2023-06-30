@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WelnessWebsite.Data;
 using WelnessWebsite.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace WelnessWebsite.Controllers
 {
@@ -22,9 +24,22 @@ namespace WelnessWebsite.Controllers
         // GET: DailyWorkouts
         public async Task<IActionResult> Index()
         {
-              return _context.DailyWorkout != null ? 
-                          View(await _context.DailyWorkout.ToListAsync()) :
-                          Problem("Entity set 'WelnessWebsiteContext.DailyWorkout'  is null.");
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                int userId = HttpContext.Session.GetInt32("UserId").Value;
+                ViewBag.ID = HttpContext.Session.GetInt32("UserId");
+
+                var dailyWorkouts = await _context.DailyWorkout
+                    .Where(d => d.UserID == userId)
+                    .ToListAsync();
+
+                return View(dailyWorkouts);
+            }
+            else
+            {
+                // Handle the case when the UserId is not available in the session
+                return Problem("User session not found");
+            }
         }
 
         // GET: DailyWorkouts/Details/5
@@ -58,13 +73,15 @@ namespace WelnessWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateTime")] DailyWorkout dailyWorkout)
         {
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
+
                 // Retrieve the user ID from the session
-                var userId = HttpContext.Session.GetString("UserID");
+                var userId = HttpContext.Session.GetInt32("UserId");
 
                 // Assign the user ID to the daily workout
-                dailyWorkout.UserID = int.Parse(userId);
+                dailyWorkout.UserID = HttpContext.Session.GetInt32("UserId").Value;
+
 
                 _context.Add(dailyWorkout);
                 await _context.SaveChangesAsync();

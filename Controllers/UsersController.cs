@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using WelnessWebsite.Data;
 using WelnessWebsite.Models;
 using WelnessWebsite.Functions;
+using Microsoft.AspNetCore.Http;
+
 
 namespace WelnessWebsite.Controllers
 {
