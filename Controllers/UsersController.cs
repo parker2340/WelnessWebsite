@@ -52,7 +52,7 @@ namespace WelnessWebsite.Controllers
                         HttpContext.Session.SetInt32("UserId", user.ID);
 
                     // Redirect to the desired page (e.g., Home/Index)
-                    return RedirectToAction("Details", "Users", new { id = user.ID });
+                    return RedirectToAction("Index", "Home", new { id = user.ID });
                 }
             }
 
