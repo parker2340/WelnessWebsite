@@ -51,21 +51,22 @@ namespace WelnessWebsite.Controllers
         }
 
         // GET: DailyWorkouts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null || _context.DailyWorkout == null)
-            {
-                return NotFound();
-            }
+            // Retrieve the daily workout with the specified ID
+            var dailyWorkout = _context.DailyWorkout
+                .Include(dw => dw.Workout)
+                .FirstOrDefault(dw => dw.ID == id);
 
-            var dailyWorkout = await _context.DailyWorkout
-                .FirstOrDefaultAsync(m => m.ID == id);
             if (dailyWorkout == null)
             {
                 return NotFound();
             }
 
-            return View(dailyWorkout);
+            // Retrieve the workouts associated with the daily workout
+            var workouts = dailyWorkout.Workout;
+
+            return View(workouts);
         }
 
         // GET: DailyWorkouts/Create

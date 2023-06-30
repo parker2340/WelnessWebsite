@@ -1,30 +1,34 @@
-﻿@model WelnessWebsite.Models.DailyWorkout
+﻿@model List<Workout>
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Daily Workout Details";
 }
 
-<h1>Details</h1>
+<h2>Daily Workout Details</h2>
 
-<div>
-    <h4>DailyWorkout</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateTime)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Muscle</th>
+                <th>Difficulty</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var workout in Model)
+            {
+                <tr>
+                    <td>@workout.Name</td>
+                    <td>@workout.Type</td>
+                    <td>@workout.Muscle</td>
+                    <td>@workout.Difficulty</td>
+                    <td>@workout.Instructions</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

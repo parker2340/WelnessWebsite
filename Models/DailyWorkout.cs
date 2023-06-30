@@ -14,7 +14,7 @@ namespace WelnessWebsite.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        public List<Workout> WorkoutList { get; set; }
+        public List<Workout> Workout { get; set; }
         public DateTime DateTime { get; set; }
 
     }
