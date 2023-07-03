@@ -12,8 +12,8 @@ using WelnessWebsite.Data;
 namespace WelnessWebsite.Migrations
 {
     [DbContext(typeof(WelnessWebsiteContext))]
-    [Migration("20230630031031_newer")]
-    partial class newer
+    [Migration("20230703195840_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

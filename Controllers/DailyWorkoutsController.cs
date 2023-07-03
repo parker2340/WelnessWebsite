@@ -94,9 +94,9 @@ namespace WelnessWebsite.Controllers
 
                 _context.Add(dailyWorkout);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Search","Workouts");
+                return RedirectToAction("Search", "Workouts", new { ID = dailyWorkout.ID });
             }
-            return View(dailyWorkout);
+            return RedirectToAction("Users", "Index");
         }
 
         // GET: DailyWorkouts/Edit/5
