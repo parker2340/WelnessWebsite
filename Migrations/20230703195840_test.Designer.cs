@@ -77,7 +77,7 @@ namespace WelnessWebsite.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<string>("type")
+                    b.Property<string>("WorkoutType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -175,7 +175,7 @@ namespace WelnessWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("WorkoutType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -19,5 +19,7 @@ namespace WelnessWebsite.Data
         public DbSet<WelnessWebsite.Models.Workout>? Workout { get; set; }
 
         public DbSet<WelnessWebsite.Models.DailyWorkout>? DailyWorkout { get; set; }
+
+        public DbSet<WelnessWebsite.Models.DailyNutrition>? DailyNutrition { get; set; }
     }
 }

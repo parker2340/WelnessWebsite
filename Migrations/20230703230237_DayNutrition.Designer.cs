@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WelnessWebsite.Data;
 
@@ -11,9 +12,10 @@ using WelnessWebsite.Data;
 namespace WelnessWebsite.Migrations
 {
     [DbContext(typeof(WelnessWebsiteContext))]
-    partial class WelnessWebsiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230703230237_DayNutrition")]
+    partial class DayNutrition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,7 +177,7 @@ namespace WelnessWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WorkoutType")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

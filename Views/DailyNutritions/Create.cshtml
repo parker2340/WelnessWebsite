@@ -1,0 +1,98 @@
+﻿@model WelnessWebsite.Models.DailyNutrition
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DailyNutrition</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WeeklyID" class="control-label"></label>
+                <input asp-for="WeeklyID" class="form-control" />
+                <span asp-validation-for="WeeklyID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Calories" class="control-label"></label>
+                <input asp-for="Calories" class="form-control" />
+                <span asp-validation-for="Calories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="serving_size_g" class="control-label"></label>
+                <input asp-for="serving_size_g" class="form-control" />
+                <span asp-validation-for="serving_size_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fat_total_g" class="control-label"></label>
+                <input asp-for="fat_total_g" class="form-control" />
+                <span asp-validation-for="fat_total_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fat_saturated_g" class="control-label"></label>
+                <input asp-for="fat_saturated_g" class="form-control" />
+                <span asp-validation-for="fat_saturated_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="protein_g" class="control-label"></label>
+                <input asp-for="protein_g" class="form-control" />
+                <span asp-validation-for="protein_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sodium_mg" class="control-label"></label>
+                <input asp-for="sodium_mg" class="form-control" />
+                <span asp-validation-for="sodium_mg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="potassium_mg" class="control-label"></label>
+                <input asp-for="potassium_mg" class="form-control" />
+                <span asp-validation-for="potassium_mg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cholesterol_mg" class="control-label"></label>
+                <input asp-for="cholesterol_mg" class="form-control" />
+                <span asp-validation-for="cholesterol_mg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="carbohydrates_total_g" class="control-label"></label>
+                <input asp-for="carbohydrates_total_g" class="form-control" />
+                <span asp-validation-for="carbohydrates_total_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fiber_g" class="control-label"></label>
+                <input asp-for="fiber_g" class="form-control" />
+                <span asp-validation-for="fiber_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sugar_g" class="control-label"></label>
+                <input asp-for="sugar_g" class="form-control" />
+                <span asp-validation-for="sugar_g" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTime" class="control-label"></label>
+                <input asp-for="DateTime" class="form-control" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
