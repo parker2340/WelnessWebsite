@@ -19,7 +19,7 @@ namespace WelnessWebsite.Models
         public int DailyWorkoutID { get; set; }
 
         public string Name { get; set; }
-        public string Type { get; set; }
+        public string? Type { get; set; }
         public string Muscle { get; set; }
         public string Difficulty { get; set; }
         public string Instructions { get; set; }

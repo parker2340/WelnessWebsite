@@ -3,6 +3,32 @@
     ViewData["Title"] = "Search";
 }
 
+<style>
+
+
+    body {
+        background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        color: white;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    th, table, tr {
+        color: white;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 <h2>Search Workouts</h2>
 
 @using (Html.BeginForm("Search", "Workouts", FormMethod.Post))
