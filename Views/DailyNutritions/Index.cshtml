@@ -1,0 +1,113 @@
+﻿@model IEnumerable<WelnessWebsite.Models.DailyNutrition>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WeeklyID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.serving_size_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fat_total_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fat_saturated_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.protein_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sodium_mg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.potassium_mg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cholesterol_mg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.carbohydrates_total_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fiber_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sugar_g)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeeklyID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serving_size_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fat_total_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fat_saturated_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.protein_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sodium_mg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.potassium_mg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cholesterol_mg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.carbohydrates_total_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fiber_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sugar_g)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

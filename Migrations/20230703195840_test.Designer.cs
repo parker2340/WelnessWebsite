@@ -12,8 +12,8 @@ using WelnessWebsite.Data;
 namespace WelnessWebsite.Migrations
 {
     [DbContext(typeof(WelnessWebsiteContext))]
-    [Migration("20230621194005_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230703195840_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,10 @@ namespace WelnessWebsite.Migrations
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
+
+                    b.Property<string>("WorkoutType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -152,7 +156,7 @@ namespace WelnessWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("DailyWorkoutID")
+                    b.Property<int>("DailyWorkoutID")
                         .HasColumnType("int");
 
                     b.Property<string>("Difficulty")
@@ -171,12 +175,9 @@ namespace WelnessWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("WorkoutType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -213,13 +214,15 @@ namespace WelnessWebsite.Migrations
             modelBuilder.Entity("WelnessWebsite.Models.Workout", b =>
                 {
                     b.HasOne("WelnessWebsite.Models.DailyWorkout", null)
-                        .WithMany("WorkoutList")
-                        .HasForeignKey("DailyWorkoutID");
+                        .WithMany("Workout")
+                        .HasForeignKey("DailyWorkoutID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
                 {
-                    b.Navigation("WorkoutList");
+                    b.Navigation("Workout");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.User", b =>

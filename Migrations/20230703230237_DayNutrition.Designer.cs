@@ -12,8 +12,8 @@ using WelnessWebsite.Data;
 namespace WelnessWebsite.Migrations
 {
     [DbContext(typeof(WelnessWebsiteContext))]
-    [Migration("20230630031031_newer")]
-    partial class newer
+    [Migration("20230703230237_DayNutrition")]
+    partial class DayNutrition
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,28 +32,31 @@ namespace WelnessWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("Calories")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Carbs")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Diber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Protein")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WeeklyID")
                         .HasColumnType("int");
 
                     b.Property<int?>("WeeklyNutritionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("caloric")
+                        .HasColumnType("int");
+
+                    b.Property<int>("carbon")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fat")
+                        .HasColumnType("int");
+
+                    b.Property<int>("protein")
+                        .HasColumnType("int");
+
+                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -77,8 +80,7 @@ namespace WelnessWebsite.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<string>("type")
-                        .IsRequired()
+                    b.Property<string>("WorkoutType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

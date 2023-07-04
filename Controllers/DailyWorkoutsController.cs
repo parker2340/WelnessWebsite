@@ -94,9 +94,9 @@ namespace WelnessWebsite.Controllers
 
                 _context.Add(dailyWorkout);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Search","Workouts");
+                return RedirectToAction("Search", "Workouts", new { ID = dailyWorkout.ID });
             }
-            return View(dailyWorkout);
+            return RedirectToAction("Users", "Index");
         }
 
         // GET: DailyWorkouts/Edit/5
@@ -175,15 +175,24 @@ namespace WelnessWebsite.Controllers
         {
             if (_context.DailyWorkout == null)
             {
-                return Problem("Entity set 'WelnessWebsiteContext.DailyWorkout'  is null.");
+                return Problem("Entity set 'WelnessWebsiteContext.DailyWorkout' is null.");
             }
-            var dailyWorkout = await _context.DailyWorkout.FindAsync(id);
-            if (dailyWorkout != null)
+
+            var dailyWorkout = await _context.DailyWorkout
+                .Include(d => d.Workout)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (dailyWorkout == null)
             {
-                _context.DailyWorkout.Remove(dailyWorkout);
+                return NotFound();
             }
-            
+
+            // Remove the associated workouts
+            _context.Workout.RemoveRange(dailyWorkout.Workout);
+
+            _context.DailyWorkout.Remove(dailyWorkout);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
