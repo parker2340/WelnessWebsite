@@ -6,6 +6,33 @@
 
 <h2>Search Daily Nutrition</h2>
 
+
+<style>
+
+
+    body {
+        background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        color: white;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    th, table, tr {
+        color: white;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 @using (Html.BeginForm("Search", "DailyNutritions", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -17,10 +44,12 @@
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Search</button>
+    
 }
 
 @if (Model != null && Model.Any())
 {
+    <br />
     <h3>Search Results</h3>
 
     <table class="table">

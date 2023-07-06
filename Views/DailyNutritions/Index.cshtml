@@ -4,10 +4,37 @@
     ViewData["Title"] = "Index";
 }
 
+
+<style>
+
+
+    body {
+        background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        color: white;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    th, table, tr {
+        color: white;
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Search">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -16,6 +43,7 @@
                 @Html.DisplayNameFor(model => model.WeeklyID)
             </th>
             <th>
+                
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -70,7 +98,8 @@
                 @Html.DisplayFor(modelItem => item.Calories)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.serving_size_g)
+                @Html.DisplayNameFor(model => model.serving_size_g)
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.fat_total_g)
