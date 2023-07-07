@@ -41,10 +41,43 @@
                 </div>*@
 
                 <div class="card">
-                    <h2>Users</h2>
-                    <p>Total users: 1000</p>
-                    <p>New users today: 20</p>
-                    <canvas id="pieChart"></canvas>
+                    <h2>Dayily Food Log</h2>
+
+                    <table id="myTable">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Calories</th>
+                            
+                        </tr>
+                    </table>
+                   
+                   
+                    @if (Model.DailyNutrition != null)
+                    {
+                        @foreach (var nutrition in Model.DailyNutrition.Nutrition)
+                        {
+
+
+                            <tr>
+                                <td>@nutrition.Name</td>
+                                <td>@nutrition.Calories</td
+                            </tr>
+
+                        }
+
+
+                    }
+                    
+                    else
+                    {   
+                        <br />
+                        <h1>EAT BRO!!!!</h1>
+                        <br />
+
+
+                    }
+                    
                 </div>
                 <div class="card">
                     <h2>Revenue</h2>
@@ -165,10 +198,10 @@
     var barChart = new Chart(ctxBar, {
         type: 'bar',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
+            labels: ,
             datasets: [{
                 label: 'Sales',
-                data: [120, 180, 90, 200, 150],
+                data: ,
                 backgroundColor: 'rgba(54, 162, 235, 0.5)', // Bar color
                 borderColor: 'rgba(54, 162, 235, 1)', // Border color
                 borderWidth: 1
