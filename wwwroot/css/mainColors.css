@@ -78,3 +78,22 @@ body {
     .card h2 {
         margin-top: 0;
     }
+
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+th, td {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    word-wrap: break-word;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+

@@ -53,26 +53,55 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>Orders</h2>
+                    <h2>Dayily workout</h2>
+                    <br/>
+                    
+
+                    <table id="myTable">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Muscle</th>
+                        </tr>
 
                     @if (Model.DailyWorkout != null)
                     {
                         @foreach (var Workouts in Model.DailyWorkout.Workout)
                         {
-                            <tr>
-                            <td>@Workouts.Name</td>
-                            <td>@Workouts.Type</td>
-                            <td>@Workouts.Muscle</td>
-                        </tr>
+                          
+                                <tr>
+                                    <td>@Workouts.Name</td>
+                                    <td>@Workouts.Type</td>
+                                    <td>@Workouts.Muscle</td>
+                                </tr>
+                           
                         }
+                            
+                           
+                        }
+   
+                    else
+                    {
+                        <h1>Off Day Bro, Get Some Rest!!</h1>
+                        <br />
+                      
+                      
+                        }
+
+
+					</table>
+                    @if (Model.DailyWorkout != null)
+                    {
+                        <br/>
+                        <a href="Dailyworkouts/index" class="login-button">Details</a>
                     }
                     else
                     {
-                        <h1>Offday bro, get some rest!!</h1>
+                        <br />
+                        <a href="Dailyworkouts/index" class="login-button">Add Workout?</a>
                     }
-
-                    <p>Total orders: 500</p>
-                    <p>Orders today: 10</p>
+                    <br/>
                 </div>
             </div>
         }
