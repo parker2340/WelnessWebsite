@@ -33,11 +33,8 @@ namespace WelnessWebsite.Migrations
                     b.Property<double>("Calories")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("DateTime")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WeeklyID")
                         .HasColumnType("int");
@@ -101,10 +98,63 @@ namespace WelnessWebsite.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserID")
-                        .IsUnique();
+                    b.HasIndex("UserID");
 
                     b.ToTable("DailyWorkout");
+                });
+
+            modelBuilder.Entity("WelnessWebsite.Models.Nutrition", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<double>("Calories")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("DailyNutritionID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("carbohydrates_total_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("cholesterol_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fat_saturated_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fat_total_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fiber_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("potassium_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("protein_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("serving_size_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("sodium_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("sugar_g")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DailyNutritionID");
+
+                    b.ToTable("Nutrition");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.User", b =>
@@ -140,28 +190,54 @@ namespace WelnessWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("Calories")
-                        .HasColumnType("int");
+                    b.Property<double>("Calories")
+                        .HasColumnType("float");
 
-                    b.Property<int>("Carbs")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fiber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Protein")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("WeekNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.Property<double>("carbohydrates_total_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("cholesterol_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fat_saturated_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fat_total_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("fiber_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("potassium_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("protein_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("serving_size_g")
+                        .HasColumnType("float");
+
+                    b.Property<double>("sodium_mg")
+                        .HasColumnType("float");
+
+                    b.Property<double>("sugar_g")
+                        .HasColumnType("float");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("WeeklyNutrition");
                 });
@@ -213,17 +289,24 @@ namespace WelnessWebsite.Migrations
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
                 {
                     b.HasOne("WelnessWebsite.Models.User", null)
-                        .WithOne("Workout")
-                        .HasForeignKey("WelnessWebsite.Models.DailyWorkout", "UserID")
+                        .WithMany("DailyWorkout")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WelnessWebsite.Models.Nutrition", b =>
+                {
+                    b.HasOne("WelnessWebsite.Models.DailyNutrition", null)
+                        .WithMany("DailyNutritions")
+                        .HasForeignKey("DailyNutritionID");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.WeeklyNutrition", b =>
                 {
                     b.HasOne("WelnessWebsite.Models.User", null)
-                        .WithOne("WeeklyNutrition")
-                        .HasForeignKey("WelnessWebsite.Models.WeeklyNutrition", "UserId")
+                        .WithMany("WeeklyNutrition")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -237,6 +320,11 @@ namespace WelnessWebsite.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WelnessWebsite.Models.DailyNutrition", b =>
+                {
+                    b.Navigation("DailyNutritions");
+                });
+
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
                 {
                     b.Navigation("Workout");
@@ -244,9 +332,9 @@ namespace WelnessWebsite.Migrations
 
             modelBuilder.Entity("WelnessWebsite.Models.User", b =>
                 {
-                    b.Navigation("WeeklyNutrition");
+                    b.Navigation("DailyWorkout");
 
-                    b.Navigation("Workout");
+                    b.Navigation("WeeklyNutrition");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.WeeklyNutrition", b =>

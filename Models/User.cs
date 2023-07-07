@@ -22,6 +22,6 @@ namespace WelnessWebsite.Models
 
 
         public List<DailyWorkout> DailyWorkout { get; set; }
-        public List<WeeklyNutrition> WeeklyNutritions { get; set; }
+        public List<WeeklyNutrition> WeeklyNutrition { get; set; }
     }
 }

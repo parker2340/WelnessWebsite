@@ -122,8 +122,7 @@ public IActionResult signUpPage()
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
-            if (ModelState.IsValid)
-            {
+
                 var functions = new MyFunctions();
 
                 // Hash the password
@@ -132,7 +131,7 @@ public IActionResult signUpPage()
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
             return View(user);
         }
 

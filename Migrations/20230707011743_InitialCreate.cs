@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WelnessWebsite.Migrations
 {
-    public partial class initalcreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace WelnessWebsite.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WorkoutType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -52,11 +52,20 @@ namespace WelnessWebsite.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Calories = table.Column<int>(type: "int", nullable: false),
-                    Fat = table.Column<int>(type: "int", nullable: false),
-                    Carbs = table.Column<int>(type: "int", nullable: false),
-                    Protein = table.Column<int>(type: "int", nullable: false),
-                    Fiber = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Calories = table.Column<double>(type: "float", nullable: false),
+                    serving_size_g = table.Column<double>(type: "float", nullable: false),
+                    fat_total_g = table.Column<double>(type: "float", nullable: false),
+                    fat_saturated_g = table.Column<double>(type: "float", nullable: false),
+                    protein_g = table.Column<double>(type: "float", nullable: false),
+                    sodium_mg = table.Column<double>(type: "float", nullable: false),
+                    potassium_mg = table.Column<double>(type: "float", nullable: false),
+                    cholesterol_mg = table.Column<double>(type: "float", nullable: false),
+                    carbohydrates_total_g = table.Column<double>(type: "float", nullable: false),
+                    fiber_g = table.Column<double>(type: "float", nullable: false),
+                    sugar_g = table.Column<double>(type: "float", nullable: false),
+                    WeekNumber = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +86,7 @@ namespace WelnessWebsite.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DailyWorkoutID = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Muscle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -100,11 +109,17 @@ namespace WelnessWebsite.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WeeklyID = table.Column<int>(type: "int", nullable: false),
-                    Calories = table.Column<int>(type: "int", nullable: false),
-                    Fat = table.Column<int>(type: "int", nullable: false),
-                    Carbs = table.Column<int>(type: "int", nullable: false),
-                    Protein = table.Column<int>(type: "int", nullable: false),
-                    Diber = table.Column<int>(type: "int", nullable: false),
+                    Calories = table.Column<double>(type: "float", nullable: false),
+                    serving_size_g = table.Column<double>(type: "float", nullable: false),
+                    fat_total_g = table.Column<double>(type: "float", nullable: false),
+                    fat_saturated_g = table.Column<double>(type: "float", nullable: false),
+                    protein_g = table.Column<double>(type: "float", nullable: false),
+                    sodium_mg = table.Column<double>(type: "float", nullable: false),
+                    potassium_mg = table.Column<double>(type: "float", nullable: false),
+                    cholesterol_mg = table.Column<double>(type: "float", nullable: false),
+                    carbohydrates_total_g = table.Column<double>(type: "float", nullable: false),
+                    fiber_g = table.Column<double>(type: "float", nullable: false),
+                    sugar_g = table.Column<double>(type: "float", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WeeklyNutritionID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -118,6 +133,36 @@ namespace WelnessWebsite.Migrations
                         principalColumn: "ID");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Nutrition",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Calories = table.Column<double>(type: "float", nullable: false),
+                    serving_size_g = table.Column<double>(type: "float", nullable: false),
+                    fat_total_g = table.Column<double>(type: "float", nullable: false),
+                    fat_saturated_g = table.Column<double>(type: "float", nullable: false),
+                    protein_g = table.Column<double>(type: "float", nullable: false),
+                    sodium_mg = table.Column<double>(type: "float", nullable: false),
+                    potassium_mg = table.Column<double>(type: "float", nullable: false),
+                    cholesterol_mg = table.Column<double>(type: "float", nullable: false),
+                    carbohydrates_total_g = table.Column<double>(type: "float", nullable: false),
+                    fiber_g = table.Column<double>(type: "float", nullable: false),
+                    sugar_g = table.Column<double>(type: "float", nullable: false),
+                    DailyNutritionID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nutrition", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Nutrition_DailyNutrition_DailyNutritionID",
+                        column: x => x.DailyNutritionID,
+                        principalTable: "DailyNutrition",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DailyNutrition_WeeklyNutritionID",
                 table: "DailyNutrition",
@@ -126,14 +171,17 @@ namespace WelnessWebsite.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DailyWorkout_UserID",
                 table: "DailyWorkout",
-                column: "UserID",
-                unique: true);
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Nutrition_DailyNutritionID",
+                table: "Nutrition",
+                column: "DailyNutritionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeeklyNutrition_UserId",
                 table: "WeeklyNutrition",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workout_DailyWorkoutID",
@@ -144,16 +192,19 @@ namespace WelnessWebsite.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DailyNutrition");
+                name: "Nutrition");
 
             migrationBuilder.DropTable(
                 name: "Workout");
 
             migrationBuilder.DropTable(
-                name: "WeeklyNutrition");
+                name: "DailyNutrition");
 
             migrationBuilder.DropTable(
                 name: "DailyWorkout");
+
+            migrationBuilder.DropTable(
+                name: "WeeklyNutrition");
 
             migrationBuilder.DropTable(
                 name: "User");

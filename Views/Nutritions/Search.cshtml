@@ -1,4 +1,4 @@
-﻿@model List<WelnessWebsite.Models.DailyNutrition>
+﻿@model List<WelnessWebsite.Models.Nutrition>
 
 @{
     ViewData["Title"] = "Search";
@@ -33,7 +33,7 @@
     }
 </style>
 
-@using (Html.BeginForm("Search", "DailyNutritions", FormMethod.Post))
+@using (Html.BeginForm("Search", "Nutritions", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WelnessWebsite.Data;
 using WelnessWebsite.Models;
+
 
 namespace WelnessWebsite.Controllers
 {
@@ -46,27 +48,69 @@ namespace WelnessWebsite.Controllers
             return View(dailyNutrition);
         }
 
-        // GET: DailyNutritions/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: DailyNutritions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WeeklyID,ID,Name,Calories,serving_size_g,fat_total_g,fat_saturated_g,protein_g,sodium_mg,potassium_mg,cholesterol_mg,carbohydrates_total_g,fiber_g,sugar_g,DateTime")] DailyNutrition dailyNutrition)
+        public async Task<IActionResult> Create()
         {
-            if (ModelState.IsValid)
+            // Get the current week number and year
+            int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            int year = DateTime.Today.Year;
+
+            // Check if WeeklyNutrition record exists for the current week and year
+            var weeklyNutrition = _context.WeeklyNutrition.FirstOrDefault(wn => wn.WeekNumber == weekNumber && wn.Year == year);
+
+            if (weeklyNutrition == null)
             {
-                _context.Add(dailyNutrition);
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                // Create a new WeeklyNutrition record for the current week and year
+                weeklyNutrition = new WeeklyNutrition
+                {
+                    UserId = userId.Value,
+                    WeekNumber = weekNumber,
+                    Year = year
+                };
+                _context.WeeklyNutrition.Add(weeklyNutrition);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return View(dailyNutrition);
+
+            // Check if DailyNutrition record exists for the current date
+            var dailyNutrition = _context.DailyNutrition.FirstOrDefault(dn => dn.DateTime.Date == DateTime.Today);
+
+            if (dailyNutrition == null)
+            {
+                // Create a new DailyNutrition record with default values
+                dailyNutrition = new DailyNutrition
+                {
+                    WeeklyID = weeklyNutrition.ID,
+                    Calories = 0,
+                    serving_size_g = 0,
+                    fat_total_g = 0,
+                    fat_saturated_g = 0,
+                    protein_g = 0,
+                    sodium_mg = 0,
+                    potassium_mg = 0,
+                    cholesterol_mg = 0,
+                    carbohydrates_total_g = 0,
+                    fiber_g = 0,
+                    sugar_g = 0,
+                    DateTime = DateTime.Today
+                };
+                _context.DailyNutrition.Add(dailyNutrition);
+                await _context.SaveChangesAsync();
+
+                // Redirect to the Nutriants/Search page with the DailyNutrition ID
+                return RedirectToAction("Search", "Nutritions", new { id = dailyNutrition.ID });
+            }
+
+            // Redirect to the Nutriants/Search page without creating a new DailyNutrition
+            return RedirectToAction("Search", "Nutritions");
         }
+
 
         // GET: DailyNutritions/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -160,49 +204,7 @@ namespace WelnessWebsite.Controllers
         {
             return (_context.DailyNutrition?.Any(e => e.ID == id)).GetValueOrDefault();
         }
-        // GET: DailyNutritions/Search
-        public IActionResult Search(int ID)
-        {
 
-            HttpContext.Session.SetInt32("WeeklyNutrition", ID);
-
-            return View();
-        }
-
-        // POST: DailyNutritions/Search
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Search(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                ModelState.AddModelError("DailyNutritions", "The Name field is required.");
-                return View();
-            }
-
-            string api_url = $"https://api.api-ninjas.com/v1/nutrition?query={name}";
-            string apiKey = "SsgKeVWXoIqUGk49rXOFiHvhnF55d2yWEXKd8KxB";
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("X-Api-Key", apiKey);
-
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync(api_url);
-                    response.EnsureSuccessStatusCode();
-
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    List<DailyNutrition> DailyNutrition = JsonConvert.DeserializeObject<List<DailyNutrition>>(responseContent);
-
-                    return View("Search", DailyNutrition);
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "An error occurred while searching for Nutrition. Please try again later.");
-                    return View();
-                }
-            }
-        }
+       
     }
 }

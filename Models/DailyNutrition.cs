@@ -15,9 +15,6 @@ namespace WelnessWebsite.Models
         [Display(Name = " ID")]
         public int ID { get; set; }
 
-        [Display(Name = "Name")]
-        public string? Name { get; set; }
-
         [Display(Name = "Calories")]
         public double Calories { get; set; }
 
@@ -53,5 +50,7 @@ namespace WelnessWebsite.Models
 
         [Display(Name = " Date")]
         public DateTime DateTime { get; set; }
+        public List<Nutrition> DailyNutritions { get; set; }
+
     }
 }
