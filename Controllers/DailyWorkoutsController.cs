@@ -80,7 +80,7 @@ namespace WelnessWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DateTime")] DailyWorkout dailyWorkout)
+        public async Task<IActionResult> Create([Bind("DateTime, WorkoutType")] DailyWorkout dailyWorkout)
         {
             if (HttpContext.Session.GetInt32("UserId") != null)
             {

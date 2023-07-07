@@ -1,4 +1,5 @@
-﻿
+﻿@model WelnessWebsite.Models.HomeView
+
 @{
     ViewData["Title"] = "Home Page";
 
@@ -54,14 +55,16 @@
                 <div class="card">
                     <h2>Orders</h2>
 
-                    @if (Model.DailyWorkout.DateTime == DateTime.Today)
-                    {   
-                        <tr>
-                            <td>@Model.Workout.Name</td>
-                            <td>@Model.Workout.Type</td>
-                            <td>@Model.Workout.Muscle</td>
-                            <td>@Model.Workout.Difficulty</td>
+                    @if (Model.DailyWorkout != null)
+                    {
+                        @foreach (var Workouts in Model.DailyWorkout.Workout)
+                        {
+                            <tr>
+                            <td>@Workouts.Name</td>
+                            <td>@Workouts.Type</td>
+                            <td>@Workouts.Muscle</td>
                         </tr>
+                        }
                     }
                     else
                     {

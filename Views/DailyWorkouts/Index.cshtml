@@ -46,6 +46,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DateTime)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkoutType)
+                </th>
                 <th></th>
                 <th></th>
             </tr>
@@ -61,7 +64,7 @@
                         @Html.DisplayFor(modelItem => item.DateTime)
                     </td>
                     <td>
-                        @Html.DisplayNameFor(model => model.WorkoutType)
+                        @Html.DisplayFor(modelItem => item.WorkoutType)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

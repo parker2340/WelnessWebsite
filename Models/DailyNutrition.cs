@@ -52,6 +52,6 @@ namespace WelnessWebsite.Models
         public double sugar_g { get; set; }
 
         [Display(Name = " Date")]
-        public DateTime? DateTime { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

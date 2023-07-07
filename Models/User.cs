@@ -20,8 +20,8 @@ namespace WelnessWebsite.Models
         [Required(ErrorMessage = "Email is required.")]
         public string Password { get; set; }
 
-         
-        public WeeklyNutrition? WeeklyNutrition { get; set;}
-        public DailyWorkout? Workout { get; set; }
+
+        public List<DailyWorkout> DailyWorkout { get; set; }
+        public List<WeeklyNutrition> WeeklyNutritions { get; set; }
     }
 }
