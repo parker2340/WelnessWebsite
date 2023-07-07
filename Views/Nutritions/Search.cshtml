@@ -70,6 +70,10 @@
             </tr>
         </thead>
         <tbody>
+            @using (Html.BeginForm("SaveNutrition", "Nutritions", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
             @foreach (var nutrition in Model)
             {
                 <tr>
@@ -85,7 +89,26 @@
                     <td>@nutrition.carbohydrates_total_g</td>
                     <td>@nutrition.fiber_g</td>
                     <td>@nutrition.sugar_g</td>
+                    <td>
+                            <input type="hidden" name="Name" value="@nutrition.Name" />
+                            <input type="hidden" name="Calories" value="@nutrition.Calories" />
+                            <input type="hidden" name="ServingSize" value="@nutrition.serving_size_g" />
+                            <input type="hidden" name="FatTotal" value="@nutrition.fat_total_g" />
+                            <input type="hidden" name="FatSaturated" value="@nutrition.fat_saturated_g" />
+                            <input type="hidden" name="Protein" value="@nutrition.protein_g" />
+                            <input type="hidden" name="Sodium" value="@nutrition.sodium_mg" />
+                            <input type="hidden" name="Potassium" value="@nutrition.potassium_mg" />
+                            <input type="hidden" name="Cholesterol" value="@nutrition.cholesterol_mg" />
+                            <input type="hidden" name="Carbohydrates" value="@nutrition.carbohydrates_total_g" />
+                            <input type="hidden" name="Fiber" value="@nutrition.fiber_g" />
+                            <input type="hidden" name="Sugar" value="@nutrition.sugar_g" />
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                    </td>
+
+                        
                 </tr>
+            }
             }
         </tbody>
     </table>

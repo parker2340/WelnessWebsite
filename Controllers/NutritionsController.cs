@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WelnessWebsite.Data;
@@ -23,7 +24,7 @@ namespace WelnessWebsite.Controllers
         public IActionResult Search(int ID)
         {
 
-            HttpContext.Session.SetInt32("DailyNutrition", ID);
+            HttpContext.Session.SetInt32("DailyNutritionID", ID);
 
             return View();
         }
@@ -61,6 +62,40 @@ namespace WelnessWebsite.Controllers
                     return View();
                 }
             }
+        }
+        [HttpPost]
+        public IActionResult SaveNutrition(string name, double calories, double servingSize, double fatTotal, double fatDouble, double protein, double sodium, double Potassium, double Cholesterol, double Carbohydrates, double fiber, double sugar)
+        {
+            var DNuttID = HttpContext.Session.GetInt32("DailyNutritionID").Value;
+
+            if (ModelState.IsValid)
+            {
+                // Create a new instance of Nutrition and set its properties
+                var newNutrition = new Nutrition
+                {
+                    Name = name,
+                    DailyNutritionID = DNuttID,
+                    Calories = calories,
+                    serving_size_g = servingSize,
+                    fat_total_g = fatTotal,
+                    fat_saturated_g = fatDouble,
+                    protein_g = protein,
+                    sodium_mg = sodium,
+                    potassium_mg = Potassium,
+                    cholesterol_mg = Cholesterol,
+                    carbohydrates_total_g = Carbohydrates,
+                    fiber_g = fiber,
+                    sugar_g = sugar
+                };
+
+                // Save the new nutrition to the database
+                _context.Nutrition.Add(newNutrition);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "DailyNutritions");
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }

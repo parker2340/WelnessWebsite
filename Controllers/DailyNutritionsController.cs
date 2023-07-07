@@ -25,9 +25,64 @@ namespace WelnessWebsite.Controllers
         // GET: DailyNutritions
         public async Task<IActionResult> Index()
         {
-            return _context.DailyNutrition != null ?
-                        View(await _context.DailyNutrition.ToListAsync()) :
-                        Problem("Entity set 'WelnessWebsiteContext.DailyNutrition'  is null.");
+            if (_context.DailyNutrition == null)
+            {
+                return Problem("Entity set 'WelnessWebsiteContext.DailyNutrition' is null.");
+            }
+
+            var dailyNutrition = await _context.DailyNutrition
+                .Include(dn => dn.Nutrition) // Include the Nutrition table
+                .ToListAsync();
+
+            // Calculate the sum of the Nutrition column for each DailyNutrition row
+            foreach (var item in dailyNutrition)
+            {
+                item.Calories = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.Calories);
+
+                item.serving_size_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.serving_size_g);
+
+                item.fat_total_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.fat_total_g);
+
+                item.fat_saturated_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.fat_saturated_g);
+
+                item.protein_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.protein_g);
+
+                item.sodium_mg = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.sodium_mg);
+
+                item.potassium_mg = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.potassium_mg);
+
+                item.cholesterol_mg = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.cholesterol_mg);
+
+                item.carbohydrates_total_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.carbohydrates_total_g);
+
+                item.fiber_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.fiber_g);
+
+                item.sugar_g = _context.Nutrition
+                    .Where(n => n.DailyNutritionID == item.ID)
+                    .Sum(n => n.sugar_g);
+            }
+
+            return View(dailyNutrition);
         }
 
         // GET: DailyNutritions/Details/5
@@ -108,7 +163,7 @@ namespace WelnessWebsite.Controllers
             }
 
             // Redirect to the Nutriants/Search page without creating a new DailyNutrition
-            return RedirectToAction("Search", "Nutritions");
+            return RedirectToAction("Search", "Nutritions", new { id = dailyNutrition.ID });
         }
 
 

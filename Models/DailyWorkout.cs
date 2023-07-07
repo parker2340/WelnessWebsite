@@ -16,6 +16,8 @@ namespace WelnessWebsite.Models
         public int ID { get; set; }
         public List<Workout> Workout { get; set; }
         public string? WorkoutType { get; set; }
+        [DisplayFormat(DataFormatString = "{0:d}")]
+
         public DateTime DateTime { get; set; }
 
     }
