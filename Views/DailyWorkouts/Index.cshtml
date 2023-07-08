@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+<link rel="stylesheet" href="/css/button.css" />
 @if (ViewBag.ID != null)
 {
     <style>
@@ -11,16 +13,12 @@
         body {
             background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
             font-family: Arial, sans-serif;
-            margin: auto;
-            padding: 0;
-            color: white;
-
-        }
-
-        html, body {
-            height: 100%;
             margin: 0;
             padding: 0;
+            color: white;
+            min-height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         th,table, tr{
@@ -32,10 +30,19 @@
         }
     </style>
 
-    <h1>Index</h1>
+    <h1>Daily Workout</h1>
 
-    <p>
-        <a asp-action="Create">Create New</a>
+    <p> 
+        <div class="containerC">
+           <a asp-action="Create" class="button">
+                <div class="button__line"></div>
+                <div class="button__line"></div>
+                <span class="button__text">New Workout!</span>
+                <div class="button__drow1"></div>
+                <div class="button__drow2"></div>
+            </a>
+
+        </div>
     </p>
     <table class="table">
         <thead>
@@ -50,7 +57,7 @@
                     @Html.DisplayNameFor(model => model.WorkoutType)
                 </th>
                 <th></th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>

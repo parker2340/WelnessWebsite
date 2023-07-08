@@ -1,11 +1,7 @@
 ﻿
 
 
-html, body {
-    height: auto;
-    margin: 0;
-    padding: 0;
-}
+
 
 
 
@@ -26,9 +22,12 @@ html, body {
 body {
     background: linear-gradient(to top, #0F0E0E 40%, #6C809A);
     font-family: Arial, sans-serif;
-    margin: auto;
+    margin: 0;
     padding: 0;
     color: white;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 

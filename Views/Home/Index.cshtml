@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/navBar.css">
     <link rel="stylesheet" href="/css/mainColors.css" />
+    <link rel="stylesheet" href="/css/button.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -71,7 +72,7 @@
                     
                     else
                     {   
-                        <br />
+                        
                         <h1>EAT BRO!!!!</h1>
                         <br />
 
@@ -127,12 +128,32 @@
                     @if (Model.DailyWorkout != null)
                     {
                         <br/>
-                        <a href="Dailyworkouts/index" class="login-button">Details</a>
+                        <div class="containerA">
+
+                          <a href="Dailyworkouts" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Details</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+
+                        </div>
                     }
                     else
                     {
                         <br />
-                        <a href="Dailyworkouts/index" class="login-button">Add Workout?</a>
+                        <div class="containerA">
+
+                          <a href="Dailyworkouts" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Add Workout?</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+
+                        </div>
                     }
                     <br/>
                 </div>
@@ -144,8 +165,30 @@
                 <div class="hero-content">
                     <h1>Your Journey to Fitness Starts Here</h1>
                     <p>Get fit, stay healthy, and achieve your goals with our personalized workout programs and expert trainers.</p>
-                    <a href="users" class="login-button">Login</a>
-                    <a href="users/create" class="login-button">Register</a> <br /><br />
+                    <div class="containerB">
+                    <div class="containerA">
+
+                          <a href="users" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Login</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+
+                        </div>
+                    <div class="containerA">
+
+                          <a href="users/create" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Details</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+
+                        </div>
+                     </div>
                     <a href="#contact" style="text-decoration:none" class="cta-button">More about the program</a>
                 </div>
             </section>
@@ -198,8 +241,8 @@
     var barChart = new Chart(ctxBar, {
         type: 'bar',
         data: {
-            labels: ,
-            datasets: [{
+            labels:  ,
+            datasets:  [{
                 label: 'Sales',
                 data: ,
                 backgroundColor: 'rgba(54, 162, 235, 0.5)', // Bar color

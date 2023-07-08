@@ -64,24 +64,24 @@ namespace WelnessWebsite.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
 
-            if (id == null || _context.User == null)
+            if (userId == null || _context.User == null)
             {
                 return NotFound();
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID == userId);
             if (user == null)
             {
                 return NotFound();
             }
 
             return View(user);
-        }
+        }   
         /*        // GET: Users/SignUp
 public IActionResult signUpPage()
 {
