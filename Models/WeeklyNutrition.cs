@@ -68,6 +68,6 @@ namespace WelnessWebsite.Models
         public double sugar_g { get; set; }
         public int WeekNumber { get; set; }
         public int Year { get; set; }
-        public List<DailyNutrition> DailyNutritions { get; set; }
+        public List<DailyNutrition> DailyNutrition { get; set; }
     }
 }

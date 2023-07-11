@@ -34,53 +34,6 @@ namespace WelnessWebsite.Controllers
                 .Include(dn => dn.Nutrition) // Include the Nutrition table
                 .ToListAsync();
 
-            // Calculate the sum of the Nutrition column for each DailyNutrition row
-            foreach (var item in dailyNutrition)
-            {
-                item.Calories = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.Calories);
-
-                item.serving_size_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.serving_size_g);
-
-                item.fat_total_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.fat_total_g);
-
-                item.fat_saturated_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.fat_saturated_g);
-
-                item.protein_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.protein_g);
-
-                item.sodium_mg = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.sodium_mg);
-
-                item.potassium_mg = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.potassium_mg);
-
-                item.cholesterol_mg = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.cholesterol_mg);
-
-                item.carbohydrates_total_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.carbohydrates_total_g);
-
-                item.fiber_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.fiber_g);
-
-                item.sugar_g = _context.Nutrition
-                    .Where(n => n.DailyNutritionID == item.ID)
-                    .Sum(n => n.sugar_g);
-            }
 
             return View(dailyNutrition);
         }
@@ -141,7 +94,7 @@ namespace WelnessWebsite.Controllers
                 // Create a new DailyNutrition record with default values
                 dailyNutrition = new DailyNutrition
                 {
-                    WeeklyID = weeklyNutrition.ID,
+                    WeeklyNutritionID = weeklyNutrition.ID,
                     Calories = 0,
                     serving_size_g = 0,
                     fat_total_g = 0,

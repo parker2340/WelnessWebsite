@@ -40,7 +40,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.WeeklyID)
+                @Html.DisplayNameFor(model => model.WeeklyNutritionID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Calories)
@@ -85,7 +85,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.WeeklyID)
+                    @Html.DisplayFor(modelItem => item.WeeklyNutritionID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Calories)

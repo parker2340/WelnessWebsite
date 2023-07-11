@@ -92,6 +92,44 @@ namespace WelnessWebsite.Controllers
                 _context.Nutrition.Add(newNutrition);
                 _context.SaveChanges();
 
+                var dailyNutrition = _context.DailyNutrition.Include(dn => dn.Nutrition)
+            .FirstOrDefault(dn => dn.ID == DNuttID);
+
+                if (dailyNutrition != null)
+                {
+                    dailyNutrition.Calories = dailyNutrition.Nutrition.Sum(n => n.Calories);
+                    dailyNutrition.serving_size_g = dailyNutrition.Nutrition.Sum(n => n.serving_size_g);
+                    dailyNutrition.fat_total_g = dailyNutrition.Nutrition.Sum(n => n.fat_total_g);
+                    dailyNutrition.fat_saturated_g = dailyNutrition.Nutrition.Sum(n => n.fat_saturated_g);
+                    dailyNutrition.protein_g = dailyNutrition.Nutrition.Sum(n => n.protein_g);
+                    dailyNutrition.sodium_mg = dailyNutrition.Nutrition.Sum(n => n.sodium_mg);
+                    dailyNutrition.potassium_mg = dailyNutrition.Nutrition.Sum(n => n.potassium_mg);
+                    dailyNutrition.cholesterol_mg = dailyNutrition.Nutrition.Sum(n => n.cholesterol_mg);
+                    dailyNutrition.carbohydrates_total_g = dailyNutrition.Nutrition.Sum(n => n.carbohydrates_total_g);
+                    dailyNutrition.fiber_g = dailyNutrition.Nutrition.Sum(n => n.fiber_g);
+                    dailyNutrition.sugar_g = dailyNutrition.Nutrition.Sum(n => n.sugar_g);
+
+                    // Retrieve the associated WeeklyNutrition
+                    var weeklyNutrition = _context.WeeklyNutrition
+                        .FirstOrDefault(wn => wn.ID == dailyNutrition.WeeklyNutritionID);
+
+                    if (weeklyNutrition != null)
+                    {
+                        // Update the values in the associated WeeklyNutrition
+                        weeklyNutrition.Calories = weeklyNutrition.DailyNutrition.Sum(dn => dn.Calories);
+                        weeklyNutrition.serving_size_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.serving_size_g);
+                        weeklyNutrition.fat_total_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.fat_total_g);
+                        weeklyNutrition.fat_saturated_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.fat_saturated_g);
+                        weeklyNutrition.protein_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.protein_g);
+                        weeklyNutrition.sodium_mg = weeklyNutrition.DailyNutrition.Sum(dn => dn.sodium_mg);
+                        weeklyNutrition.potassium_mg = weeklyNutrition.DailyNutrition.Sum(dn => dn.potassium_mg);
+                        weeklyNutrition.cholesterol_mg = weeklyNutrition.DailyNutrition.Sum(dn => dn.cholesterol_mg);
+                        weeklyNutrition.carbohydrates_total_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.carbohydrates_total_g);
+                        weeklyNutrition.fiber_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.fiber_g);
+                        weeklyNutrition.sugar_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.sugar_g);
+                    }
+                        _context.SaveChanges();
+                }
                 return RedirectToAction("Index", "DailyNutritions");
             }
 
