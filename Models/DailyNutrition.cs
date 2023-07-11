@@ -9,7 +9,7 @@ namespace WelnessWebsite.Models
         {
             
         }
-        public int WeeklyID { get; set; }
+        public int WeeklyNutritionID { get; set; }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = " ID")]

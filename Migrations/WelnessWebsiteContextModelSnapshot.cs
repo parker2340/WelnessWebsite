@@ -36,10 +36,7 @@ namespace WelnessWebsite.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WeeklyID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeeklyNutritionID")
+                    b.Property<int>("WeeklyNutritionID")
                         .HasColumnType("int");
 
                     b.Property<double>("carbohydrates_total_g")
@@ -282,8 +279,10 @@ namespace WelnessWebsite.Migrations
             modelBuilder.Entity("WelnessWebsite.Models.DailyNutrition", b =>
                 {
                     b.HasOne("WelnessWebsite.Models.WeeklyNutrition", null)
-                        .WithMany("DailyNutritions")
-                        .HasForeignKey("WeeklyNutritionID");
+                        .WithMany("DailyNutrition")
+                        .HasForeignKey("WeeklyNutritionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
@@ -298,7 +297,7 @@ namespace WelnessWebsite.Migrations
             modelBuilder.Entity("WelnessWebsite.Models.Nutrition", b =>
                 {
                     b.HasOne("WelnessWebsite.Models.DailyNutrition", null)
-                        .WithMany("DailyNutritions")
+                        .WithMany("Nutrition")
                         .HasForeignKey("DailyNutritionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -324,7 +323,7 @@ namespace WelnessWebsite.Migrations
 
             modelBuilder.Entity("WelnessWebsite.Models.DailyNutrition", b =>
                 {
-                    b.Navigation("DailyNutritions");
+                    b.Navigation("Nutrition");
                 });
 
             modelBuilder.Entity("WelnessWebsite.Models.DailyWorkout", b =>
@@ -341,7 +340,7 @@ namespace WelnessWebsite.Migrations
 
             modelBuilder.Entity("WelnessWebsite.Models.WeeklyNutrition", b =>
                 {
-                    b.Navigation("DailyNutritions");
+                    b.Navigation("DailyNutrition");
                 });
 #pragma warning restore 612, 618
         }

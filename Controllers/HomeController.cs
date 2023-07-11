@@ -30,8 +30,11 @@ namespace WelnessWebsite.Controllers
                 .Include(u => u.DailyWorkout)
                 .ThenInclude(dw => dw.Workout)
                 .Include(u => u.WeeklyNutrition)
-                .ThenInclude(wn => wn.DailyNutritions)
+                .ThenInclude(wn => wn.DailyNutrition)
+                .ThenInclude(n => n.Nutrition)
                 .FirstOrDefault();
+
+
 
             if (user == null)
             {
@@ -42,8 +45,8 @@ namespace WelnessWebsite.Controllers
                 .FirstOrDefault(dw => dw.DateTime != null && dw.DateTime.Date == today.Date);
 
             var dailyNutrition = user.WeeklyNutrition
-                .SelectMany(wn => wn.DailyNutritions)
-                .Where(dn => dn.DateTime != null && dn.DateTime.Date == today.Date)
+                .SelectMany(wn => wn.DailyNutrition)
+                .Where(dn => dn.DateTime != null && dn.DateTime.Date == today.Date.Date)
                 .FirstOrDefault();
 
 

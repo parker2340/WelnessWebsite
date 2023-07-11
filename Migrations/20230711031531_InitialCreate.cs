@@ -108,7 +108,7 @@ namespace WelnessWebsite.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WeeklyID = table.Column<int>(type: "int", nullable: false),
+                    WeeklyNutritionID = table.Column<int>(type: "int", nullable: false),
                     Calories = table.Column<double>(type: "float", nullable: false),
                     serving_size_g = table.Column<double>(type: "float", nullable: false),
                     fat_total_g = table.Column<double>(type: "float", nullable: false),
@@ -120,8 +120,7 @@ namespace WelnessWebsite.Migrations
                     carbohydrates_total_g = table.Column<double>(type: "float", nullable: false),
                     fiber_g = table.Column<double>(type: "float", nullable: false),
                     sugar_g = table.Column<double>(type: "float", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WeeklyNutritionID = table.Column<int>(type: "int", nullable: true)
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +129,8 @@ namespace WelnessWebsite.Migrations
                         name: "FK_DailyNutrition_WeeklyNutrition_WeeklyNutritionID",
                         column: x => x.WeeklyNutritionID,
                         principalTable: "WeeklyNutrition",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,6 +139,7 @@ namespace WelnessWebsite.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DailyNutritionID = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Calories = table.Column<double>(type: "float", nullable: false),
                     serving_size_g = table.Column<double>(type: "float", nullable: false),
@@ -150,8 +151,7 @@ namespace WelnessWebsite.Migrations
                     cholesterol_mg = table.Column<double>(type: "float", nullable: false),
                     carbohydrates_total_g = table.Column<double>(type: "float", nullable: false),
                     fiber_g = table.Column<double>(type: "float", nullable: false),
-                    sugar_g = table.Column<double>(type: "float", nullable: false),
-                    DailyNutritionID = table.Column<int>(type: "int", nullable: true)
+                    sugar_g = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,7 +160,8 @@ namespace WelnessWebsite.Migrations
                         name: "FK_Nutrition_DailyNutrition_DailyNutritionID",
                         column: x => x.DailyNutritionID,
                         principalTable: "DailyNutrition",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
