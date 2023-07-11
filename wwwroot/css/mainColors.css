@@ -68,7 +68,7 @@ body {
 }
 
 .card {
-    background: linear-gradient(to bottom, #0F0E0E 40%, #6C809A);
+    background: linear-gradient(to bottom, #0F0E0E 40%, #FBB13C);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -85,6 +85,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
+
 }
 
 th, td {
@@ -94,6 +95,6 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #black;
 }
 

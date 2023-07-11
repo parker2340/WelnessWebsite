@@ -42,8 +42,8 @@
                 </div>*@
 
                 <div class="card">
-                    <h2>Dayily Food Log</h2>
-
+                    <h2>Daily Food Log</h2>
+                    <br />
                     <table id="myTable">
 
                         <tr>
@@ -52,42 +52,123 @@
                             
                         </tr>
                     </table>
-                   
+                    
                    
                     @if (Model.DailyNutrition != null)
                     {
                         @foreach (var nutrition in Model.DailyNutrition.Nutrition)
                         {
-
+                            <table class="mytable">
 
                             <tr>
                                 <td>@nutrition.Name</td>
                                 <td>@nutrition.Calories</td
                             </tr>
-
+                            </table>
+                            <br />
                         }
+                        
 
 
+                        <div class="containerA">
+
+                          <a href="DailyNutrions" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Details</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+                        </div>
                     }
                     
                     else
                     {   
-                        
+                        <br />
+                        <br />
                         <h1>EAT BRO!!!!</h1>
                         <br />
 
+                        <br />
+                        <br />
+                        <br />
+
+                          <a href="DailyNutrions" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Add Food</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
 
                     }
                     
                 </div>
                 <div class="card">
-                    <h2>Revenue</h2>
-                    <p>Total revenue: $10,000</p>
-                    <p>Revenue this month: $1,500</p>
-                    <canvas id="barChart"></canvas>
+                    
+                    <h2>Weekly Food Log</h2>
+                    <br />
+                    <table id="myTable">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Calories</th>
+                            
+                        </tr>
+                    </table>
+                    
+                   
+                    @if (Model.DailyNutrition != null)
+                    {
+                        @foreach (var wnutrition in Model.DailyNutrition.Nutrition)
+                        {
+                            <table class="mytable">
+
+                            <tr>
+                                <td>@wnutrition.Name</td>
+                                <td>@wnutrition.Calories</td
+                            </tr>
+                            </table>
+                            <br />
+                        }
+                        
+
+
+                        <div class="containerA">
+
+                          <a href="DailyNutrions" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Details</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+                        </div>
+                    }
+                    
+                    else
+                    {   
+                        <br />
+                        <br />
+                        <h1>EAT BRO!!!!</h1>
+                        <br />
+
+                        <br />
+                        <br />
+                        <br />
+
+                          <a href="DailyNutrions" class="button">
+                            <div class="button__line"></div>
+                            <div class="button__line"></div>
+                            <span class="button__text">Add Food</span>
+                            <div class="button__drow1"></div>
+                            <div class="button__drow2"></div>
+                          </a>
+
+                    }
                 </div>
                 <div class="card">
-                    <h2>Dayily workout</h2>
+                    <h2>Daily workout</h2>
                     <br/>
                     
 

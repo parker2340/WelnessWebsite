@@ -34,16 +34,9 @@
 <h1>Daily Nutrition</h1>
 
 
-    <div class="containerC">
-        <a asp-action="Create" class="button">
-            <div class="button__line"></div>
-            <div class="button__line"></div>
-            <span class="button__text">New Workout!</span>
-            <div class="button__drow1"></div>
-            <div class="button__drow2"></div>
-        </a>
-
-    </div>
+<form method="post" asp-action="Create">
+    <button type="submit">Add Today</button>
+</form>
 
 <table class="table">
     <thead>

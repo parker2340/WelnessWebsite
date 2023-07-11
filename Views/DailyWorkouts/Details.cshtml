@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Daily Workout Details";
 }
-
+<link rel="stylesheet" href="/css/mainColors.css" />
+<style>
+    th, table, tr {
+        color: white;
+    }
+</style>
 <h2>Daily Workout Details</h2>
 
 @if (Model != null && Model.Any())
