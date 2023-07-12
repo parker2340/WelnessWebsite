@@ -12,8 +12,10 @@
 <body>
     <header>
         <nav class="navbar">
+            <a href="/">
             <img src="\image\logo.PNG" alt="logo" class="navbar-brand">
             @*<a class="navbar-brand" href="#">Workout Website</a>*@
+            </a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
                 
@@ -21,6 +23,7 @@
                 {
                     <li><a href="#">Log out</a></li>
                 }
+              
                 else
                 {
                     @if (Context.Session.GetInt32("UserId") != null)
