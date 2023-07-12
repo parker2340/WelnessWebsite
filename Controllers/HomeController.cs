@@ -57,5 +57,14 @@ namespace WelnessWebsite.Controllers
                 DailyNutrition = dailyNutrition
             });
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+
+        }
+
+
+
     }
 }
