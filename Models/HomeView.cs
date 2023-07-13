@@ -5,5 +5,6 @@
         public User? User { get; set; }
         public DailyNutrition? DailyNutrition { get; set;}
         public DailyWorkout? DailyWorkout { get; set;}
+        public WeeklyNutrition? WeeklyNutrition { get; set; }
     }
 }

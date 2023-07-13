@@ -118,14 +118,14 @@
                     </table>
                     
                    
-                    @if (Model.DailyNutrition != null)
+                    @if (Model.WeeklyNutrition != null)
                     {
-                        @foreach (var wnutrition in Model.DailyNutrition.Nutrition)
+                        @foreach (var wnutrition in Model.WeeklyNutrition.DailyNutrition)
                         {
                             <table class="mytable">
 
                             <tr>
-                                <td>@wnutrition.Name</td>
+                                <td>@wnutrition.DateTime.DayOfWeek</td>
                                 <td>@wnutrition.Calories</td
                             </tr>
                             </table>

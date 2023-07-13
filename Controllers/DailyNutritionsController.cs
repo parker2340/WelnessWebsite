@@ -106,7 +106,7 @@ namespace WelnessWebsite.Controllers
                     carbohydrates_total_g = 0,
                     fiber_g = 0,
                     sugar_g = 0,
-                    DateTime = DateTime.Today
+                    DateTime = DateTime.Today,                    
                 };
                 _context.DailyNutrition.Add(dailyNutrition);
                 await _context.SaveChangesAsync();
