@@ -288,11 +288,13 @@
 /* 本体には関係ないスタイル */
 .containerA {
     width: 100%;
-    height: 200px;
+    height: 58px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    position: relative;
+    
 }
 
 
