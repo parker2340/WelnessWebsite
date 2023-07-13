@@ -21,6 +21,7 @@
     color: var(--line_color);
     letter-spacing: 2px;
     transition: all .3s ease;
+    margin-top: auto;
 }
 
 .button__text {
@@ -294,7 +295,7 @@
     justify-content: flex-end;
     align-items: center;
     position: relative;
-    
+    transform: translateY(100%);
 }
 
 

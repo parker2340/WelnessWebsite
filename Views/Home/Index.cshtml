@@ -70,6 +70,9 @@
                         
                         <br/>
                         <br/>
+                        
+                        
+                        
 
                         <div class="containerA">
 
@@ -88,10 +91,7 @@
                         <br />
                         <br />
                         <h1>EAT BRO!!!!</h1>
-                        <br />
-
-                       <br/>
-                        <br/>
+                        
 
                         <div class="containerA"> 
                           <a href="/DailyNutritions/Index" class="button">
@@ -143,7 +143,7 @@
                       </tr>
                       </table>
 
-                      <br/>
+                      
                         
                         
                       
@@ -164,9 +164,7 @@
                         <br />
                         <br />
                         <h1>EAT BRO!!!!</h1>
-                        <br />
-                        <br/>
-                        <br/>
+                        
                         
                          <div class="containerA">
 
@@ -211,7 +209,7 @@
    
                     else
                     {
-                        <h1>Off Day Bro, Get Some Rest!!</h1>
+                        <h4>Off Day Bro, Get Some Rest!!</h4>
                         <br />
                       
                       
@@ -221,8 +219,7 @@
 					</table>
                     @if (Model.DailyWorkout != null)
                     {
-                        <br/>
-                        <br/>
+                        <br />
                         <div class="containerA">
 
                           <a href="Dailyworkouts" class="button">
@@ -237,7 +234,9 @@
                     }
                     else
                     {
-                        <br />
+                        <br/>
+                        <p></p>
+                        
                         <div class="containerA">
 
                           <a href="Dailyworkouts" class="button">
@@ -284,7 +283,7 @@
 
                         </div>
                      </div>
-                    <a href="#contact" style="text-decoration:none" class="cta-button">More about the program</a>
+                 
                 </div>
             </section>
 
@@ -324,48 +323,11 @@
 </body>
             <footer class="border-top footer text-muted">
                 <div class="container">
-                    &copy; 2023 - WelnessWebsite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    &copy; 2023 - Gym Bros - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </div>
         
         
     </footer>
 
-<script>
-    // Bar Chart
-    var ctxBar = document.getElementById('barChart').getContext('2d');
-    var barChart = new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels:  ,
-            datasets:  [{
-                label: 'Sales',
-                data: ,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)', // Bar color
-                borderColor: 'rgba(54, 162, 235, 1)', // Border color
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    // Pie Chart
-    var ctxPie = document.getElementById('pieChart').getContext('2d');
-    var pieChart = new Chart(ctxPie, {
-        type: 'pie',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green'],
-            datasets: [{
-                data: [10, 20, 15, 5],
-                backgroundColor: ['red', 'blue', 'yellow', 'green']
-            }]
-        }
-    });
-</script>
 
    
