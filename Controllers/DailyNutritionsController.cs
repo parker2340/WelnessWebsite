@@ -29,13 +29,20 @@ namespace WelnessWebsite.Controllers
             {
                 return Problem("Entity set 'WelnessWebsiteContext.DailyNutrition' is null.");
             }
+            var userID = HttpContext.Session.GetInt32("UserId").Value;
 
-            var dailyNutrition = await _context.DailyNutrition
-                .Include(dn => dn.Nutrition) // Include the Nutrition table
+            var weeklyNutritions = await _context.WeeklyNutrition
+                .Where(wn => wn.UserId == userID)
+                .Include(wn => wn.DailyNutrition)
+                .ThenInclude(dn => dn.Nutrition)
                 .ToListAsync();
 
+            var dailyNutritions = weeklyNutritions
+                .SelectMany(wn => wn.DailyNutrition)
+                .ToList();
 
-            return View(dailyNutrition);
+
+            return View(dailyNutritions);
         }
 
         // GET: DailyNutritions/Details/5
@@ -70,14 +77,14 @@ namespace WelnessWebsite.Controllers
             int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             int year = DateTime.Today.Year;
 
-            // Check if WeeklyNutrition record exists for the current week and year
-            var weeklyNutrition = _context.WeeklyNutrition.FirstOrDefault(wn => wn.WeekNumber == weekNumber && wn.Year == year);
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            // Check if WeeklyNutrition record exists for the current week, year, and user ID
+            var weeklyNutrition = _context.WeeklyNutrition.FirstOrDefault(wn => wn.UserId == userId && wn.WeekNumber == weekNumber && wn.Year == year);
 
             if (weeklyNutrition == null)
             {
-                var userId = HttpContext.Session.GetInt32("UserId");
-
-                // Create a new WeeklyNutrition record for the current week and year
+                // Create a new WeeklyNutrition record for the current week, year, and user ID
                 weeklyNutrition = new WeeklyNutrition
                 {
                     UserId = userId.Value,
@@ -88,8 +95,8 @@ namespace WelnessWebsite.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            // Check if DailyNutrition record exists for the current date
-            var dailyNutrition = _context.DailyNutrition.FirstOrDefault(dn => dn.DateTime.Date == DateTime.Today);
+            // Check if DailyNutrition record exists for the current date and WeeklyNutrition ID
+            var dailyNutrition = _context.DailyNutrition.FirstOrDefault(dn => dn.DateTime.Date == DateTime.Today && dn.WeeklyNutritionID == weeklyNutrition.ID);
 
             if (dailyNutrition == null)
             {
@@ -108,7 +115,7 @@ namespace WelnessWebsite.Controllers
                     carbohydrates_total_g = 0,
                     fiber_g = 0,
                     sugar_g = 0,
-                    DateTime = DateTime.Today,                    
+                    DateTime = DateTime.Today,
                 };
                 _context.DailyNutrition.Add(dailyNutrition);
                 await _context.SaveChangesAsync();
@@ -122,7 +129,8 @@ namespace WelnessWebsite.Controllers
         }
 
 
-        // GET: DailyNutritions/Edit/5
+
+/*        // GET: DailyNutritions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.DailyNutrition == null)
@@ -136,41 +144,27 @@ namespace WelnessWebsite.Controllers
                 return NotFound();
             }
             return View(dailyNutrition);
-        }
+        }*/
 
         // POST: DailyNutritions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WeeklyID,ID,Name,Calories,serving_size_g,fat_total_g,fat_saturated_g,protein_g,sodium_mg,potassium_mg,cholesterol_mg,carbohydrates_total_g,fiber_g,sugar_g,DateTime")] DailyNutrition dailyNutrition)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != dailyNutrition.ID)
+            if (_context.Workout == null)
             {
-                return NotFound();
+                return Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
+            }
+            var Nutrition = await _context.Nutrition.FindAsync(id);
+            if (Nutrition != null)
+            {
+                _context.Nutrition.Remove(Nutrition);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dailyNutrition);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DailyNutritionExists(dailyNutrition.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(dailyNutrition);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: DailyNutritions/Delete/5

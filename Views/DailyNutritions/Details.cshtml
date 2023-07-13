@@ -9,7 +9,7 @@
         color: white;
     }
 </style>
-<h2>Daily Workout Details</h2>
+<h2>Daily Nutrition Details</h2>
 
 @if (Model != null && Model.Any())
 {
@@ -46,6 +46,13 @@
                     <td>@nutrition.carbohydrates_total_g</td>
                     <td>@nutrition.fiber_g</td>
                     <td>@nutrition.sugar_g</td>
+                    <td>
+                        <form method="post" asp-action="Edit" asp-route-id="@nutrition.ID">
+                            <input type="hidden" name="id" value="@nutrition.ID" />
+                            <button type="submit">Delete</button>
+                        </form>
+
+                    </td>
                 </tr>
             }
         </tbody>

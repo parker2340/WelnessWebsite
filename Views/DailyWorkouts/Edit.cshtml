@@ -36,8 +36,9 @@
                 <th>Type</th>
                 <th>Muscle</th>
                 <th>Difficulty</th>
-                <th>Instructions</th>
                 <th></th> <!-- Add an empty header column for the delete button -->
+                <th></th> <!-- Add an empty header column for the delete button -->
+
             </tr>
         </thead>
         <tbody>
@@ -48,7 +49,6 @@
                     <td>@workout.Type</td>
                     <td>@workout.Muscle</td>
                     <td>@workout.Difficulty</td>
-                    <td>@workout.Instructions</td>
                     <td>
                         <form method="post" asp-action="Edit" asp-route-id="@workout.ID">
                             <input type="hidden" name="id" value="@workout.ID" />
