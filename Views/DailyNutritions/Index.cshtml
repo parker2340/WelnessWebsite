@@ -40,9 +40,10 @@
 
 <table class="table">
     <thead>
+
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.WeeklyNutritionID)
+                @Html.DisplayNameFor(model => model.DateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Calories)
@@ -77,18 +78,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.sugar_g)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTime)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.WeeklyNutritionID)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Calories)
             </td>
@@ -123,14 +122,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.sugar_g)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
+<td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                </td>
         </tr>
 }
     </tbody>

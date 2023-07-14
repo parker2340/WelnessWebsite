@@ -1,96 +1,53 @@
-﻿@model WelnessWebsite.Models.DailyNutrition
+﻿@model List<Nutrition>
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Daily Workout Details";
 }
 <link rel="stylesheet" href="/css/mainColors.css" />
-<h1>Details</h1>
+<style>
+    th, table, tr {
+        color: white;
+    }
+</style>
+<h2>Daily Workout Details</h2>
 
-<div>
-    <h4>DailyNutrition</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WeeklyNutritionID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WeeklyNutritionID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Calories)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Calories)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.serving_size_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.serving_size_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.fat_total_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.fat_total_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.fat_saturated_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.fat_saturated_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.protein_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.protein_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.sodium_mg)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.sodium_mg)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.potassium_mg)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.potassium_mg)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.cholesterol_mg)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.cholesterol_mg)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.carbohydrates_total_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.carbohydrates_total_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.fiber_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.fiber_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.sugar_g)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.sugar_g)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateTime)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Calories</th>
+                <th>Serving Size (g)</th>
+                <th>Total Fat (g)</th>
+                <th>Saturated Fat (g)</th>
+                <th>Protein (g)</th>
+                <th>Sodium (mg)</th>
+                <th>Potassium (mg)</th>
+                <th>Cholesterol (mg)</th>
+                <th>Total Carbohydrates (g)</th>
+                <th>Fiber (g)</th>
+                <th>Sugar (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nutrition in Model)
+            {
+                <tr>
+                    <td>@nutrition.Name</td>
+                    <td>@nutrition.Calories</td>
+                    <td>@nutrition.serving_size_g</td>
+                    <td>@nutrition.fat_total_g</td>
+                    <td>@nutrition.fat_saturated_g</td>
+                    <td>@nutrition.protein_g</td>
+                    <td>@nutrition.sodium_mg</td>
+                    <td>@nutrition.potassium_mg</td>
+                    <td>@nutrition.cholesterol_mg</td>
+                    <td>@nutrition.carbohydrates_total_g</td>
+                    <td>@nutrition.fiber_g</td>
+                    <td>@nutrition.sugar_g</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

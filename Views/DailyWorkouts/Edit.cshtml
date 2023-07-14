@@ -1,39 +1,65 @@
-﻿@model WelnessWebsite.Models.DailyWorkout
+﻿@model List<Workout>
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Daily Workout Details";
 }
 <link rel="stylesheet" href="/css/mainColors.css" />
-<h1>Edit</h1>
+<link rel="stylesheet" href="/css/button.css" />
+<style>
+    th, table, tr {
+        color: white;
+    }
+</style>
+<h2>Daily Workout Details</h2>
 
-<h4>DailyWorkout</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserID" class="control-label"></label>
-                <input asp-for="UserID" class="form-control" />
-                <span asp-validation-for="UserID" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="DateTime" class="control-label"></label>
-                <input asp-for="DateTime" class="form-control" />
-                <span asp-validation-for="DateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <a asp-controller="Workouts" asp-action="Search" asp-route-id="@ViewBag.dailyworkoutID" class="button">
+        <div class="button__line"></div>
+        <div class="button__line"></div>
+        <span class="button__text">Details</span>
+        <div class="button__drow1"></div>
+        <div class="button__drow2"></div>
+    </a>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model != null && Model.Any())
+{
+<table class="table">
+        <thead>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            <tr>
+
+                <th>Name</th>
+                <th>Type</th>
+                <th>Muscle</th>
+                <th>Difficulty</th>
+                <th>Instructions</th>
+                <th></th> <!-- Add an empty header column for the delete button -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var workout in Model)
+            {
+                <tr>
+                    <td>@workout.Name</td>
+                    <td>@workout.Type</td>
+                    <td>@workout.Muscle</td>
+                    <td>@workout.Difficulty</td>
+                    <td>@workout.Instructions</td>
+                    <td>
+                        <form method="post" asp-action="Edit" asp-route-id="@workout.ID">
+                            <input type="hidden" name="id" value="@workout.ID" />
+                            <button type="submit">Delete</button>
+                        </form>
+
+                    </td>
+                    <td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
 }
+<div class="containerA">
+
+
+</div>

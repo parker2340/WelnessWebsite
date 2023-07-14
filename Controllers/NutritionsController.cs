@@ -130,12 +130,13 @@ namespace WelnessWebsite.Controllers
                         weeklyNutrition.fiber_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.fiber_g);
                         weeklyNutrition.sugar_g = weeklyNutrition.DailyNutrition.Sum(dn => dn.sugar_g);
                     }
-                        _context.SaveChanges();
+                    _context.SaveChanges();
                 }
                 return RedirectToAction("Index", "DailyNutritions");
             }
 
             return BadRequest(ModelState);
         }
+
     }
 }

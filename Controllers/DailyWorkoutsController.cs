@@ -102,17 +102,20 @@ namespace WelnessWebsite.Controllers
         // GET: DailyWorkouts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.DailyWorkout == null)
-            {
-                return NotFound();
-            }
+            // Retrieve the daily workout with the specified ID
+            var dailyWorkout = _context.DailyWorkout
+                .Include(dw => dw.Workout)
+                .FirstOrDefault(dw => dw.ID == id);
 
-            var dailyWorkout = await _context.DailyWorkout.FindAsync(id);
             if (dailyWorkout == null)
             {
                 return NotFound();
             }
-            return View(dailyWorkout);
+
+            // Retrieve the workouts associated with the daily workout
+            var workouts = dailyWorkout.Workout;
+            ViewBag.dailyworkoutID = id;
+            return View(workouts);
         }
 
         // POST: DailyWorkouts/Edit/5
@@ -120,35 +123,23 @@ namespace WelnessWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,ID,DateTime")] DailyWorkout dailyWorkout)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != dailyWorkout.ID)
+            if (_context.Workout == null)
             {
-                return NotFound();
+                return Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
+            }
+            var Workout = await _context.Workout.FindAsync(id);
+            if (Workout != null)
+            {
+                _context.Workout.Remove(Workout);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dailyWorkout);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DailyWorkoutExists(dailyWorkout.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(dailyWorkout);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+
+
 
         // GET: DailyWorkouts/Delete/5
         public async Task<IActionResult> Delete(int? id)

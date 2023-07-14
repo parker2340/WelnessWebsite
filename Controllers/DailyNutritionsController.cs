@@ -39,22 +39,24 @@ namespace WelnessWebsite.Controllers
         }
 
         // GET: DailyNutritions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null || _context.DailyNutrition == null)
+            // Retrieve the daily workout with the specified ID
+            var dailynutrition = _context.DailyNutrition
+                .Include(dw => dw.Nutrition)
+                .FirstOrDefault(dw => dw.ID == id);
+
+            if (dailynutrition == null)
             {
                 return NotFound();
             }
 
-            var dailyNutrition = await _context.DailyNutrition
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (dailyNutrition == null)
-            {
-                return NotFound();
-            }
+            // Retrieve the workouts associated with the daily workout
+            var Nutrition = dailynutrition.Nutrition;
 
-            return View(dailyNutrition);
+            return View(Nutrition);
         }
+
 
 
         // POST: DailyNutritions/Create

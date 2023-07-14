@@ -17,10 +17,9 @@ namespace WelnessWebsite.Models
 
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Email is required.")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
-
-
         public List<DailyWorkout> DailyWorkout { get; set; }
         public List<WeeklyNutrition> WeeklyNutrition { get; set; }
     }

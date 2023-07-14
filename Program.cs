@@ -17,7 +17,11 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
+builder.Services.AddRazorPages()
+    .AddViewOptions(options =>
+    {
+        options.HtmlHelperOptions.ClientValidationEnabled = false;
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -82,32 +82,6 @@ namespace WelnessWebsite.Controllers
 
             return View(user);
         }   
-        /*        // GET: Users/SignUp
-public IActionResult signUpPage()
-{
-    return View();
-}
-
-*//*        public IActionResult Index(string username, string password)
-        {
-            if (ValidateCredentials(username, password))
-            {
-                // Credentials are valid, proceed to show the user list
-                return View(_context.User.ToList());
-            }
-            else
-            {
-                // Credentials are invalid, show an error message or redirect to an error page
-                return Content("Invalid username or password");
-            }
-        }*//*
-
-
-        private bool ValidateCredentials(string username, string password)
-        {
-            var user = _context.User.FirstOrDefault(u => u.Name == username && u.Password == password);
-            return user != null;
-        }*/
 
         // GET: Users/Create
         public IActionResult Create()
@@ -163,28 +137,43 @@ public IActionResult signUpPage()
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var existingUser = await _context.User.FindAsync(id);
+
+            if (existingUser == null)
             {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(user);
+
+            if (!string.IsNullOrEmpty(user.Password))
+            {
+                var functions = new MyFunctions();
+                user.Password = functions.HashPassword(user.Password);
+            }
+            else
+            {
+                user.Password = existingUser.Password;
+            }
+
+            try
+            {
+                _context.Entry(existingUser).CurrentValues.SetValues(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Details));
         }
+
+
 
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
