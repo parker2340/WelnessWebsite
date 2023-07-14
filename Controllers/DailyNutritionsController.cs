@@ -130,7 +130,7 @@ namespace WelnessWebsite.Controllers
 
 
 
-        // GET: DailyNutritions/Edit/5
+/*        // GET: DailyNutritions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.DailyNutrition == null)
@@ -144,41 +144,27 @@ namespace WelnessWebsite.Controllers
                 return NotFound();
             }
             return View(dailyNutrition);
-        }
+        }*/
 
         // POST: DailyNutritions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WeeklyID,ID,Name,Calories,serving_size_g,fat_total_g,fat_saturated_g,protein_g,sodium_mg,potassium_mg,cholesterol_mg,carbohydrates_total_g,fiber_g,sugar_g,DateTime")] DailyNutrition dailyNutrition)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != dailyNutrition.ID)
+            if (_context.Workout == null)
             {
-                return NotFound();
+                return Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
+            }
+            var Nutrition = await _context.Nutrition.FindAsync(id);
+            if (Nutrition != null)
+            {
+                _context.Nutrition.Remove(Nutrition);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dailyNutrition);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DailyNutritionExists(dailyNutrition.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(dailyNutrition);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: DailyNutritions/Delete/5
