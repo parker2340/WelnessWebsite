@@ -111,7 +111,9 @@ namespace WelnessWebsite.Controllers
 
                     // Retrieve the associated WeeklyNutrition
                     var weeklyNutrition = _context.WeeklyNutrition
-                        .FirstOrDefault(wn => wn.ID == dailyNutrition.WeeklyNutritionID);
+                        .Where(u => u.ID == dailyNutrition.WeeklyNutritionID)
+                        .Include(wn => wn.DailyNutrition)
+                        .FirstOrDefault();
 
                     if (weeklyNutrition != null)
                     {

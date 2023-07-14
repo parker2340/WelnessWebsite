@@ -114,6 +114,7 @@
                             <th>Name</th>
                             <th>Calories</th>
                             
+                            
                         </tr>
                     </table>
                     
@@ -125,12 +126,20 @@
                             <table class="mytable">
 
                             <tr>
-                                <td>@wnutrition.DateTime.DayOfWeek</td>
-                                <td>@wnutrition.Calories</td
+                                <td>@Html.DisplayFor(model => wnutrition.DateTime.DayOfWeek)</td>
+                                <td>@Html.DisplayFor(model => wnutrition.Calories)</td>
+
                             </tr>
                             </table>
                             <br />
-                        }
+                      }
+                        <table id="myTable">
+                        <tr>
+                            <td>Total</td>
+                      <td>@Html.DisplayFor(model => model.WeeklyNutrition.Calories)</td>
+                      </tr>
+                      </table>
+
                         
 
 
