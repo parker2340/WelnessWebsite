@@ -153,19 +153,78 @@ namespace WelnessWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id)
         {
-            if (_context.Workout == null)
+            var nutrition = await _context.Nutrition.FindAsync(id);
+            if (nutrition == null)
             {
-                return Problem("Entity set 'WelnessWebsiteContext.Workout'  is null.");
-            }
-            var Nutrition = await _context.Nutrition.FindAsync(id);
-            if (Nutrition != null)
-            {
-                _context.Nutrition.Remove(Nutrition);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
+            var dailyNutrition = await _context.DailyNutrition.FindAsync(nutrition.DailyNutritionID);
+            if (dailyNutrition == null)
+            {
+                return NotFound();
+            }
+
+            var weeklyNutrition = await _context.WeeklyNutrition.FindAsync(dailyNutrition.WeeklyNutritionID);
+            if (weeklyNutrition == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Nutrition.Remove(nutrition);
+                await _context.SaveChangesAsync();
+
+
+                var allNutritions = await _context.Nutrition
+    .Where(dn => dn.DailyNutritionID == dailyNutrition.ID)
+    .ToListAsync();
+
+                // Update DailyNutrition if necessary
+                dailyNutrition.Calories = allNutritions.Sum(n => n.Calories);
+                dailyNutrition.serving_size_g = allNutritions.Sum(n => n.serving_size_g);
+                dailyNutrition.fat_total_g = allNutritions.Sum(n => n.fat_total_g);
+                dailyNutrition.fat_saturated_g = allNutritions.Sum(n => n.fat_saturated_g);
+                dailyNutrition.protein_g = allNutritions.Sum(n => n.protein_g);
+                dailyNutrition.sodium_mg = allNutritions.Sum(n => n.sodium_mg);
+                dailyNutrition.potassium_mg = allNutritions.Sum(n => n.potassium_mg);
+                dailyNutrition.cholesterol_mg = allNutritions.Sum(n => n.cholesterol_mg);
+                dailyNutrition.carbohydrates_total_g = allNutritions.Sum(n => n.carbohydrates_total_g);
+                dailyNutrition.fiber_g = allNutritions.Sum(n => n.fiber_g);
+                dailyNutrition.sugar_g = allNutritions.Sum(n => n.sugar_g);
+
+                // Get all DailyNutrition associated with the WeeklyNutrition
+                var allDailyNutritions = await _context.DailyNutrition
+                    .Where(dn => dn.WeeklyNutritionID == weeklyNutrition.ID)
+                    .ToListAsync();
+
+                // Update WeeklyNutrition with the sum of all DailyNutritions
+                weeklyNutrition.Calories = allDailyNutritions.Sum(dn => dn.Calories);
+                weeklyNutrition.serving_size_g = allDailyNutritions.Sum(dn => dn.serving_size_g);
+                weeklyNutrition.fat_total_g = allDailyNutritions.Sum(dn => dn.fat_total_g);
+                weeklyNutrition.fat_saturated_g = allDailyNutritions.Sum(dn => dn.fat_saturated_g);
+                weeklyNutrition.protein_g = allDailyNutritions.Sum(dn => dn.protein_g);
+                weeklyNutrition.sodium_mg = allDailyNutritions.Sum(dn => dn.sodium_mg);
+                weeklyNutrition.potassium_mg = allDailyNutritions.Sum(dn => dn.potassium_mg);
+                weeklyNutrition.cholesterol_mg = allDailyNutritions.Sum(dn => dn.cholesterol_mg);
+                weeklyNutrition.carbohydrates_total_g = allDailyNutritions.Sum(dn => dn.carbohydrates_total_g);
+                weeklyNutrition.fiber_g = allDailyNutritions.Sum(dn => dn.fiber_g);
+                weeklyNutrition.sugar_g = allDailyNutritions.Sum(dn => dn.sugar_g);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
             return RedirectToAction(nameof(Index));
         }
+
+
+
+
 
         // GET: DailyNutritions/Delete/5
         public async Task<IActionResult> Delete(int? id)
