@@ -38,7 +38,7 @@ body {
     background-image: url('background-image.jpg');
     background-size: cover;
     background-position: center;
-    height: 400px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,10 +75,13 @@ body {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     color: white;
+    height: 50vh;
+    margin-top:10%;
 }
 
     .card h2 {
         margin-top: 0;
+        text-align:center;
     }
 
 

@@ -21,6 +21,7 @@
     color: var(--line_color);
     letter-spacing: 2px;
     transition: all .3s ease;
+    margin-top: auto;
 }
 
 .button__text {
@@ -288,11 +289,13 @@
 /* 本体には関係ないスタイル */
 .containerA {
     width: 100%;
-    height: 200px;
+    height: 58px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    position: relative;
+    transform: translateY(100%);
 }
 
 
